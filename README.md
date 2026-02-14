@@ -40,6 +40,10 @@ Both tools support filtering by category:
 - Node.js v24.x or later (latest version recommended)
 - npm v11.x or later
 
+### Quick Start
+
+See [QUICK_START.md](QUICK_START.md) for a streamlined setup guide.
+
 ### Setup
 
 1. Clone the repository:
@@ -83,7 +87,7 @@ The server uses stdio transport and can be integrated with any MCP-compatible cl
 
 #### Claude Desktop Configuration
 
-Add to your Claude Desktop configuration file:
+Add to your Claude Desktop configuration file (see [mcp-config.example.json](mcp-config.example.json) for reference):
 
 **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 **Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
