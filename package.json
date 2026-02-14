@@ -1,7 +1,7 @@
 {
   "name": "rules-mcp-server",
   "version": "1.0.0",
-  "description": "MCP server to POC an idea of aggregating rules for multiple similar projects under a singles mcp server",
+  "description": "MCP server providing organized development rules, best practices, and architectural guidance for microfrontend and microservice applications. Supports filtering by project system, language, and code type.",
   "main": "build/index.js",
   "type": "module",
   "bin": {
@@ -28,7 +28,14 @@
   ],
   "author": "",
   "license": "ISC",
-
+  "files": [
+    "build/**/*",
+    "README.md",
+    "QUICK_START.md",
+    "DEVELOPER_GUIDE.md",
+    "NPM_USAGE.md",
+    "mcp-config.example.json"
+  ],
   "bugs": {
     "url": "https://github.com/YuryKabernik/rules-mcp-server/issues"
   },

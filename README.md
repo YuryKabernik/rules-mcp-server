@@ -16,12 +16,44 @@ This MCP server aggregates development rules, best practices, and guidance for b
 - `get-microfrontend-rules`: Get rules for microfrontend development
 - `get-microservice-rules`: Get rules for microservice development
 
-Both tools support filtering by category:
+Both tools support advanced filtering:
+
+**By Category:**
 - `architecture`: Architectural patterns and decisions
 - `performance`: Performance optimization techniques
 - `security`: Security best practices
 - `testing`: Testing strategies
 - `all`: All rules (default)
+
+**By Language:**
+- `typescript`, `javascript`, `python`, `java`, `go`, `rust`
+- Filters rules specific to a programming language
+
+**By Code Type:**
+- `source`: Rules for source code
+- `test`: Rules for test code
+
+**Example queries:**
+```json
+// Get TypeScript-specific microfrontend architecture rules
+{
+  "name": "get-microfrontend-rules",
+  "arguments": {
+    "category": "architecture",
+    "language": "typescript",
+    "codeType": "source"
+  }
+}
+
+// Get all microservice testing rules
+{
+  "name": "get-microservice-rules",
+  "arguments": {
+    "category": "testing",
+    "codeType": "test"
+  }
+}
+```
 
 ### Resources
 - Microfrontend Architecture Guide
@@ -132,14 +164,34 @@ Add to your Cline MCP settings:
 
 ### Project Structure
 
+The codebase is organized into a modular structure for easy maintenance and extensibility:
+
 ```
 rules-mcp-server/
 ├── src/
-│   └── index.ts          # Main server implementation
-├── build/                # Compiled JavaScript (generated)
-├── package.json          # Project metadata and dependencies
-├── tsconfig.json         # TypeScript configuration
-└── README.md            # This file
+│   ├── index.ts                    # Main entry point
+│   ├── server.ts                   # Server initialization
+│   ├── types/
+│   │   └── index.ts               # TypeScript type definitions
+│   ├── handlers/                   # MCP request handlers
+│   │   ├── tools.ts               # Rules tool handler
+│   │   ├── resources.ts           # Documentation handler
+│   │   └── prompts.ts             # Prompts handler
+│   ├── rules/                      # Development rules
+│   │   ├── index.ts               # Rules registry
+│   │   ├── microfrontend/
+│   │   │   └── index.ts           # Microfrontend rules
+│   │   └── microservice/
+│   │       └── index.ts           # Microservice rules
+│   ├── resources/                  # Documentation resources
+│   │   └── index.ts               # Resources registry
+│   └── prompts/                    # Prompt templates
+│       └── index.ts               # Prompts registry
+├── build/                          # Compiled JavaScript (generated)
+├── test/                           # Test scripts
+├── package.json                    # Project metadata and dependencies
+├── tsconfig.json                   # TypeScript configuration
+└── README.md                      # This file
 ```
 
 ### Available Scripts
@@ -152,11 +204,57 @@ rules-mcp-server/
 
 ### Adding Content
 
-The server infrastructure is ready, and placeholders are in place for:
+The server is structured for easy extensibility. To add new rules:
 
-1. **Rules Content**: Edit the tool handlers in `src/index.ts` to add actual rules
-2. **Resources**: Update resource handlers to add detailed documentation
-3. **Prompts**: Enhance prompt templates with comprehensive guidance
+#### 1. Adding Rules
+
+Rules are organized by project system, language, and code type:
+
+**Add to existing system** (e.g., microfrontend):
+- Edit `src/rules/microfrontend/index.ts`
+- Add new `Rule` objects to the `rules` array
+- Rules support filtering by category, language, and code type
+
+**Add a new system** (e.g., monolith):
+```typescript
+// Create src/rules/monolith/index.ts
+import { Rule, RuleCollection } from "../../types/index.js";
+
+const rules: Rule[] = [
+  {
+    id: "mono-arch-001",
+    title: "Your Rule Title",
+    description: "Rule description",
+    category: "architecture",
+    system: "monolith", // Must match your system name
+    language: "typescript", // Optional
+    codeType: "source", // Optional: "source" or "test"
+    content: "Detailed rule content...",
+    tags: ["tag1", "tag2"],
+  },
+];
+
+export function getMonolithRules(category, language, codeType) {
+  // Filter rules based on parameters
+  return { system: "monolith", rules: filteredRules };
+}
+```
+
+Then update `src/rules/index.ts` to include your new system.
+
+#### 2. Adding Resources
+
+Resources provide documentation and guides:
+- Edit `src/resources/index.ts`
+- Add new `Resource` objects to the `resources` array
+- Each resource has a URI, name, description, and markdown content
+
+#### 3. Adding Prompts
+
+Prompts provide interactive templates:
+- Edit `src/prompts/index.ts`
+- Add new `PromptTemplate` objects to the `prompts` array
+- Define arguments and a template function that generates the prompt text
 
 ## Technical Details
 
