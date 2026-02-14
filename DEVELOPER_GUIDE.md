@@ -8,67 +8,100 @@ The server is built with a modular architecture that separates concerns:
 
 - **Types** (`src/types/`): TypeScript interfaces and types
 - **Handlers** (`src/handlers/`): MCP protocol request handlers
-- **Rules** (`src/rules/`): Development rules organized by project system
+- **Rules** (`src/rules/`): Rule loaders that read from markdown files
+- **Rules Content** (`rules/`): **Markdown files with frontmatter metadata**
 - **Resources** (`src/resources/`): Documentation and guides
 - **Prompts** (`src/prompts/`): Interactive prompt templates
+- **Utils** (`src/utils/`): Utilities including markdown file loader
 
 ## Adding New Rules
 
-Rules are the core content of this server. They provide development best practices and guidelines.
+Rules are stored as **markdown files with YAML frontmatter** in the `rules/` directory. This makes it easy to add content without modifying TypeScript code.
 
-### Rule Structure
+### Rule File Format
 
-Each rule follows this structure:
+Each rule is a markdown file with this structure:
 
-```typescript
-interface Rule {
-  id: string;              // Unique identifier (e.g., "mfe-arch-001")
-  title: string;           // Short, descriptive title
-  description: string;     // Brief description
-  category: RuleCategory;  // "architecture" | "performance" | "security" | "testing"
-  system: ProjectSystem;   // "microfrontend" | "microservice"
-  language?: Language;     // Optional: "typescript" | "javascript" | etc.
-  codeType?: CodeType;     // Optional: "source" | "test"
-  content: string;         // Detailed markdown content
-  examples?: string[];     // Optional: code examples
-  tags?: string[];         // Optional: searchable tags
-}
+```markdown
+---
+id: mfe-arch-001
+title: Module Federation Setup
+description: Use Module Federation for runtime integration
+category: architecture
+system: microfrontend
+language: typescript
+codeType: source
+tags:
+  - webpack
+  - module-federation
+---
+
+# Module Federation Setup
+
+Your rule content in markdown...
+
+## Code Examples
+
+\`\`\`typescript
+// Code example here
+\`\`\`
 ```
+
+### Frontmatter Fields
+
+**Required:**
+- `id`: Unique identifier (format: `{system}-{category}-{number}`)
+- `title`: Short, descriptive title
+- `description`: Brief description
+- `category`: `architecture`, `performance`, `security`, or `testing`
+- `system`: `microfrontend` or `microservice`
+
+**Optional:**
+- `language`: `typescript`, `javascript`, `python`, `java`, `go`, `rust`
+- `codeType`: `source` or `test`
+- `tags`: Array of searchable tags
 
 ### Adding Rules to an Existing System
 
-1. Navigate to the appropriate system directory:
-   - Microfrontend: `src/rules/microfrontend/index.ts`
-   - Microservice: `src/rules/microservice/index.ts`
+1. Create a new markdown file in the appropriate directory:
+   - Microfrontend: `rules/microfrontend/mfe-{category}-{number}.md`
+   - Microservice: `rules/microservice/ms-{category}-{number}.md`
 
-2. Add your rule to the `rules` array:
+2. Add frontmatter and content:
 
-```typescript
-const rules: Rule[] = [
-  // Existing rules...
-  {
-    id: "mfe-arch-002",
-    title: "Shared Component Library",
-    description: "Use a shared component library for consistency",
-    category: "architecture",
-    system: "microfrontend",
-    language: "typescript",
-    content: `
+```markdown
+---
+id: mfe-arch-002
+title: Shared Component Library
+description: Use a shared component library for consistency
+category: architecture
+system: microfrontend
+language: typescript
+codeType: source
+tags:
+  - components
+  - design-system
+---
+
 # Shared Component Library
 
 Create a shared component library to maintain design consistency...
 
 ## Implementation
+
 \`\`\`typescript
 // Your code example
 \`\`\`
-`,
-    tags: ["components", "design-system"],
-  },
-];
 ```
 
-3. Rebuild the project: `npm run build`
+3. Test the rule loads correctly:
+
+```bash
+npm run build
+node test/markdown-test.js
+```
+
+For complete details on markdown format, see [rules/README.md](rules/README.md).
 
 ### Adding a New Project System
 

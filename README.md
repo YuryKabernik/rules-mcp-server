@@ -4,9 +4,13 @@ MCP (Model Context Protocol) server providing development rules, resources, and 
 
 ## Overview
 
-This MCP server aggregates development rules, best practices, and guidance for building distributed systems using microfrontend and microservice architectures. It provides:
+This MCP server aggregates development rules, best practices, and guidance for building distributed systems using microfrontend and microservice architectures. 
 
-- **Tools**: Access development rules and best practices by category
+**Rules are now stored as markdown files with frontmatter metadata**, making it easy to add, edit, and organize content without modifying code. See [rules/README.md](rules/README.md) for details on the markdown format.
+
+The server provides:
+
+- **Tools**: Access development rules and best practices by category, language, and code type
 - **Resources**: Documentation and architectural guides
 - **Prompts**: Templates for common development scenarios
 
@@ -177,16 +181,29 @@ rules-mcp-server/
 │   │   ├── tools.ts               # Rules tool handler
 │   │   ├── resources.ts           # Documentation handler
 │   │   └── prompts.ts             # Prompts handler
-│   ├── rules/                      # Development rules
+│   ├── rules/                      # Rules loaders
 │   │   ├── index.ts               # Rules registry
 │   │   ├── microfrontend/
-│   │   │   └── index.ts           # Microfrontend rules
+│   │   │   └── index.ts           # Microfrontend rules loader
 │   │   └── microservice/
-│   │       └── index.ts           # Microservice rules
+│   │       └── index.ts           # Microservice rules loader
 │   ├── resources/                  # Documentation resources
 │   │   └── index.ts               # Resources registry
-│   └── prompts/                    # Prompt templates
-│       └── index.ts               # Prompts registry
+│   ├── prompts/                    # Prompt templates
+│   │   └── index.ts               # Prompts registry
+│   └── utils/                      # Utilities
+│       └── markdownLoader.ts      # Markdown file parser
+├── rules/                          # 📝 Markdown rule files
+│   ├── README.md                  # Rules format guide
+│   ├── microfrontend/
+│   │   ├── mfe-arch-001.md       # Architecture rules
+│   │   ├── mfe-perf-001.md       # Performance rules
+│   │   └── mfe-test-001.md       # Testing rules
+│   └── microservice/
+│       ├── ms-arch-001.md        # Architecture rules
+│       ├── ms-perf-001.md        # Performance rules
+│       ├── ms-sec-001.md         # Security rules
+│       └── ms-test-001.md        # Testing rules
 ├── build/                          # Compiled JavaScript (generated)
 ├── test/                           # Test scripts
 ├── package.json                    # Project metadata and dependencies
@@ -204,43 +221,60 @@ rules-mcp-server/
 
 ### Adding Content
 
-The server is structured for easy extensibility. To add new rules:
+Rules are now stored as **markdown files with frontmatter metadata** in the `rules/` directory. This makes it easy to add and edit content without modifying TypeScript code.
 
 #### 1. Adding Rules
 
-Rules are organized by project system, language, and code type:
+**Quick Start:**
 
-**Add to existing system** (e.g., microfrontend):
-- Edit `src/rules/microfrontend/index.ts`
-- Add new `Rule` objects to the `rules` array
-- Rules support filtering by category, language, and code type
+1. Create a new markdown file in the appropriate directory:
+   - `rules/microfrontend/` for microfrontend rules
+   - `rules/microservice/` for microservice rules
 
-**Add a new system** (e.g., monolith):
-```typescript
-// Create src/rules/monolith/index.ts
-import { Rule, RuleCollection } from "../../types/index.js";
+2. Add frontmatter metadata at the top:
+```markdown
+---
+id: mfe-arch-002
+title: Your Rule Title
+description: Brief description
+category: architecture
+system: microfrontend
+language: typescript  # optional
+codeType: source     # optional
+tags:
+  - tag1
+  - tag2
+---
 
-const rules: Rule[] = [
-  {
-    id: "mono-arch-001",
-    title: "Your Rule Title",
-    description: "Rule description",
-    category: "architecture",
-    system: "monolith", // Must match your system name
-    language: "typescript", // Optional
-    codeType: "source", // Optional: "source" or "test"
-    content: "Detailed rule content...",
-    tags: ["tag1", "tag2"],
-  },
-];
+# Your Rule Content
 
-export function getMonolithRules(category, language, codeType) {
-  // Filter rules based on parameters
-  return { system: "monolith", rules: filteredRules };
-}
+Write your rule content in markdown...
 ```
 
-Then update `src/rules/index.ts` to include your new system.
+3. Build and test:
+```bash
+npm run build
+npm start
+```
+
+**Detailed Guide:** See [rules/README.md](rules/README.md) for complete documentation on:
+- Markdown format and frontmatter fields
+- Naming conventions
+- Adding examples and code snippets
+- Best practices for writing rules
+
+**Adding a new project system:**
+
+To add support for a new system (e.g., "monolith"):
+
+1. Create a new directory: `rules/monolith/`
+2. Add markdown rule files in that directory
+3. Create `src/rules/monolith/index.ts` to load the rules (copy from existing systems)
+4. Update `src/types/index.ts` to add the system to `ProjectSystem` type
+5. Update `src/rules/index.ts` to include the new system
+6. Add a tool handler in `src/handlers/tools.ts`
+
+See [DEVELOPER_GUIDE.md](DEVELOPER_GUIDE.md) for detailed instructions.
 
 #### 2. Adding Resources
 
