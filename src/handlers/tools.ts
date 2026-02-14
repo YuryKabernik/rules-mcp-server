@@ -80,7 +80,7 @@ export function registerToolsHandlers(server: Server): void {
 
     if (name === "get-microfrontend-rules") {
       const { category, language, codeType } = args as GetRulesInput;
-      const rules = getRules("microfrontend", category, language, codeType);
+      const rules = await getRules("microfrontend", category, language, codeType);
       const text = formatRulesAsText(rules);
 
       return {
@@ -95,7 +95,7 @@ export function registerToolsHandlers(server: Server): void {
 
     if (name === "get-microservice-rules") {
       const { category, language, codeType } = args as GetRulesInput;
-      const rules = getRules("microservice", category, language, codeType);
+      const rules = await getRules("microservice", category, language, codeType);
       const text = formatRulesAsText(rules);
 
       return {

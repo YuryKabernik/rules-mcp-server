@@ -12,17 +12,17 @@ import { RuleCollection } from "../types/index.js";
 /**
  * Get rules for a specific system
  */
-export function getRules(
+export async function getRules(
   system: "microfrontend" | "microservice",
   category?: string,
   language?: string,
   codeType?: string
-): RuleCollection {
+): Promise<RuleCollection> {
   switch (system) {
     case "microfrontend":
-      return getMicrofrontendRules(category, language, codeType);
+      return await getMicrofrontendRules(category, language, codeType);
     case "microservice":
-      return getMicroserviceRules(category, language, codeType);
+      return await getMicroserviceRules(category, language, codeType);
     default:
       throw new Error(`Unknown system: ${system}`);
   }

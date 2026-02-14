@@ -30,6 +30,7 @@
   "license": "ISC",
   "files": [
     "build/**/*",
+    "rules/**/*.md",
     "README.md",
     "QUICK_START.md",
     "DEVELOPER_GUIDE.md",
@@ -41,7 +42,8 @@
   },
   "homepage": "https://github.com/YuryKabernik/rules-mcp-server#readme",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.26.0"
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "gray-matter": "^4.0.3"
   },
   "devDependencies": {
     "@types/node": "^25.2.3",
