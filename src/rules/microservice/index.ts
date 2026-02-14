@@ -4,7 +4,7 @@
  * This module contains development rules and best practices for microservice applications.
  */
 
-import { Rule, RuleCollection } from "../../types/index.js";
+import { Rule, RuleCollection, Language } from "../../types/index.js";
 
 /**
  * Get microservice rules by category
@@ -35,7 +35,7 @@ export function getMicroserviceRules(
 
   return {
     system: "microservice",
-    language: language as any,
+    language: language as Language | undefined,
     rules: filteredRules,
   };
 }

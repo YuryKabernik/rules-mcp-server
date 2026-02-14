@@ -3,14 +3,23 @@
  */
 
 /**
- * Category of rules
+ * Category of rules for filtering
  */
-export type RuleCategory = 
+export type RuleCategoryFilter = 
   | "architecture"
   | "performance"
   | "security"
   | "testing"
   | "all";
+
+/**
+ * Category of rules (for rule definitions - excludes "all")
+ */
+export type RuleCategory = 
+  | "architecture"
+  | "performance"
+  | "security"
+  | "testing";
 
 /**
  * Project system type
@@ -91,7 +100,7 @@ export interface PromptTemplate {
  * Tool input schema for getting rules
  */
 export interface GetRulesInput {
-  category?: RuleCategory;
+  category?: RuleCategoryFilter;
   language?: Language;
   codeType?: CodeType;
 }

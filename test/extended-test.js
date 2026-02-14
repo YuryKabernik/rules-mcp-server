@@ -20,7 +20,13 @@ let responseBuffer = '';
 
 server.stdout.on('data', (data) => {
   responseBuffer += data.toString();
-  console.log('Server response:', data.toString().substring(0, 500));
+  const response = data.toString();
+  // Show full response for debugging, but limit to reasonable length
+  const displayLength = response.length > 1000 ? 1000 : response.length;
+  console.log('Server response:', response.substring(0, displayLength));
+  if (response.length > 1000) {
+    console.log('... (truncated)');
+  }
 });
 
 server.stderr.on('data', (data) => {
