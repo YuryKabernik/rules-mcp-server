@@ -7,6 +7,18 @@
 - ❌ **v2 is NOT yet available** on npm
 - ⚠️ v2 is in **pre-alpha development**
 - 📅 Stable v2 release anticipated in **Q1 2026**
+- ✅ **Architecture refactored for smooth v2 migration** - See [V2_MIGRATION_ARCHITECTURE.md](V2_MIGRATION_ARCHITECTURE.md)
+
+## Migration-Ready Architecture
+
+This project has been refactored to facilitate smooth migration to v2. **All MCP SDK dependencies are now isolated to a single abstraction file** (`src/types/mcp.ts`), which means:
+
+✅ Only **ONE file** needs to be updated when v2 is released  
+✅ All handler files remain unchanged during migration  
+✅ Type safety is maintained throughout  
+✅ Migration risk is minimal  
+
+See [V2_MIGRATION_ARCHITECTURE.md](V2_MIGRATION_ARCHITECTURE.md) for detailed architecture documentation.
 
 ## Why Not Migrate Now?
 
@@ -110,13 +122,10 @@ When v2 is released:
 - [ ] Backup current working code
 - [ ] Uninstall v1 SDK: `npm uninstall @modelcontextprotocol/sdk`
 - [ ] Install v2 packages: `npm install @modelcontextprotocol/server`
-- [ ] Update all imports in:
-  - [ ] `src/server.ts`
-  - [ ] `src/handlers/tools.ts`
-  - [ ] `src/handlers/resources.ts`
-  - [ ] `src/handlers/prompts.ts`
-- [ ] Replace schema-based handlers with method strings
-- [ ] Update documentation references
+- [ ] **Update ONLY `src/types/mcp.ts`** (thanks to abstraction layer!)
+  - [ ] Update import paths to v2 packages
+  - [ ] Change `getRequestIdentifier()` to return method strings
+  - [ ] Remove schema imports (no longer needed)
 - [ ] Test thoroughly:
   - [ ] Build succeeds
   - [ ] Server starts
@@ -126,57 +135,55 @@ When v2 is released:
 - [ ] Monitor for issues
 - [ ] Deploy to production
 
+**Note:** Thanks to the abstraction layer, handler files (`tools.ts`, `resources.ts`, `prompts.ts`) **do NOT need changes**!
+
 ## Files That Will Need Changes
 
-### src/server.ts
+### src/types/mcp.ts (ONLY FILE REQUIRING UPDATES)
+
 ```typescript
 // Update imports
-- import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-- import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-+ import { McpServer, StdioServerTransport } from "@modelcontextprotocol/server";
+- export { Server as McpServer } from "@modelcontextprotocol/sdk/server/index.js";
+- export { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
++ export { McpServer, StdioServerTransport } from "@modelcontextprotocol/server";
+
+// Remove schema imports
+- import {
+-   CallToolRequestSchema,
+-   ListToolsRequestSchema,
+-   // ... other schemas
+- } from "@modelcontextprotocol/sdk/types.js";
+
+// Update getRequestIdentifier function
+export function getRequestIdentifier(methodDef) {
+- return methodDef.schema;  // v1
++ return methodDef.method;  // v2
+}
 ```
 
-### src/handlers/tools.ts
+### Handler Files (NO CHANGES NEEDED)
+
+All handler files (`src/handlers/*.ts`) **work without modification** because they use the abstraction layer:
+
 ```typescript
-// Update imports and handler registration
-- import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-- import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
-+ import { McpServer } from "@modelcontextprotocol/server";
-
-// Handler registration
-- server.setRequestHandler(ListToolsRequestSchema, async () => { ... });
-- server.setRequestHandler(CallToolRequestSchema, async (request) => { ... });
-+ server.setRequestHandler('tools/list', async () => { ... });
-+ server.setRequestHandler('tools/call', async (request) => { ... });
+// This code works in both v1 and v2!
+import { McpServer, MCP_METHODS, getRequestIdentifier } from "../types/mcp.js";
+server.setRequestHandler(getRequestIdentifier(MCP_METHODS.TOOLS_CALL), handler);
 ```
 
-### src/handlers/resources.ts
-```typescript
-// Update imports and handler registration
-- import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-- import { ListResourcesRequestSchema, ReadResourceRequestSchema } from "@modelcontextprotocol/sdk/types.js";
-+ import { McpServer } from "@modelcontextprotocol/server";
+## Architecture Benefits
 
-// Handler registration
-- server.setRequestHandler(ListResourcesRequestSchema, async () => { ... });
-- server.setRequestHandler(ReadResourceRequestSchema, async (request) => { ... });
-+ server.setRequestHandler('resources/list', async () => { ... });
-+ server.setRequestHandler('resources/read', async (request) => { ... });
-```
+The refactored architecture makes v2 migration trivial:
 
-### src/handlers/prompts.ts
-```typescript
-// Update imports and handler registration
-- import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-- import { ListPromptsRequestSchema, GetPromptRequestSchema } from "@modelcontextprotocol/sdk/types.js";
-+ import { McpServer } from "@modelcontextprotocol/server";
+| Aspect | Before Refactoring | After Refactoring |
+|--------|-------------------|-------------------|
+| Files to update | 6+ files | 1 file only |
+| Import changes | Scattered | Centralized |
+| Handler changes | 6 registrations | 0 changes |
+| Migration risk | High | Low |
+| Test updates | Many | None |
 
-// Handler registration
-- server.setRequestHandler(ListPromptsRequestSchema, async () => { ... });
-- server.setRequestHandler(GetPromptRequestSchema, async (request) => { ... });
-+ server.setRequestHandler('prompts/list', async () => { ... });
-+ server.setRequestHandler('prompts/get', async (request) => { ... });
-```
+See [V2_MIGRATION_ARCHITECTURE.md](V2_MIGRATION_ARCHITECTURE.md) for complete architectural details.
 
 ## Support Timeline
 

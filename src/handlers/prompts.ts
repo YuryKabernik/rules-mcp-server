@@ -8,25 +8,21 @@
  * the prompts capability and handle prompt requests.
  */
 
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import {
-  ListPromptsRequestSchema,
-  GetPromptRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
+import { McpServer, MCP_METHODS, getRequestIdentifier } from "../types/mcp.js";
 import { getAllPrompts, getPromptByName } from "../prompts/index.js";
 
 /**
  * Register prompts handlers to the MCP server
  * 
  * Registers request handlers for:
- * - ListPromptsRequestSchema: Returns available prompts
- * - GetPromptRequestSchema: Returns prompt content
+ * - PROMPTS_LIST: Returns available prompts
+ * - PROMPTS_GET: Returns prompt content
  * 
  * @param server - The MCP Server instance to register handlers on
  */
-export function registerPromptsHandlers(server: Server): void {
+export function registerPromptsHandlers(server: McpServer): void {
   // List available prompts
-  server.setRequestHandler(ListPromptsRequestSchema, async () => {
+  server.setRequestHandler(getRequestIdentifier(MCP_METHODS.PROMPTS_LIST), async () => {
     const prompts = getAllPrompts();
     
     return {
@@ -39,7 +35,7 @@ export function registerPromptsHandlers(server: Server): void {
   });
 
   // Get a specific prompt
-  server.setRequestHandler(GetPromptRequestSchema, async (request) => {
+  server.setRequestHandler(getRequestIdentifier(MCP_METHODS.PROMPTS_GET), async (request) => {
     const { name, arguments: args } = request.params;
     const prompt = getPromptByName(name);
 

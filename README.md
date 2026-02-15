@@ -303,6 +303,7 @@ Prompts provide interactive templates:
 - **Language**: TypeScript 5.x
 - **SDK**: [@modelcontextprotocol/sdk](https://github.com/modelcontextprotocol/sdk) v1.26.0 (latest stable)
   - 📝 [v2 Migration Guide](docs/MCP_SDK_V2_MIGRATION.md) - v2 not yet available, planned for Q1 2026
+  - 🏗️ [Migration Architecture](docs/V2_MIGRATION_ARCHITECTURE.md) - Ready for smooth v2 migration (single-file update)
 - **Build Tool**: TypeScript compiler (tsc)
 - **Dev Runner**: tsx (TypeScript execute)
 

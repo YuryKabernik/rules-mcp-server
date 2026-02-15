@@ -9,8 +9,7 @@
  * @see {@link https://modelcontextprotocol.io/docs/concepts/architecture | MCP Architecture}
  */
 
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { McpServer, StdioServerTransport } from "./types/mcp.js";
 import { registerToolsHandlers } from "./handlers/tools.js";
 import { registerResourcesHandlers } from "./handlers/resources.js";
 import { registerPromptsHandlers } from "./handlers/prompts.js";
@@ -29,8 +28,8 @@ import { registerPromptsHandlers } from "./handlers/prompts.js";
  * 
  * @returns Configured MCP Server instance
  */
-export function createServer(): Server {
-  const server = new Server(
+export function createServer(): McpServer {
+  const server = new McpServer(
     {
       name: "rules-mcp-server",
       version: "1.0.0",

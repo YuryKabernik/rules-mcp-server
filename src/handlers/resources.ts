@@ -8,25 +8,21 @@
  * the resources capability and handle resource requests.
  */
 
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import {
-  ListResourcesRequestSchema,
-  ReadResourceRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
+import { McpServer, MCP_METHODS, getRequestIdentifier } from "../types/mcp.js";
 import { getAllResources, getResourceByUri } from "../resources/index.js";
 
 /**
  * Register resources handlers to the MCP server
  * 
  * Registers request handlers for:
- * - ListResourcesRequestSchema: Returns available resources
- * - ReadResourceRequestSchema: Returns resource content
+ * - RESOURCES_LIST: Returns available resources
+ * - RESOURCES_READ: Returns resource content
  * 
  * @param server - The MCP Server instance to register handlers on
  */
-export function registerResourcesHandlers(server: Server): void {
+export function registerResourcesHandlers(server: McpServer): void {
   // List available resources
-  server.setRequestHandler(ListResourcesRequestSchema, async () => {
+  server.setRequestHandler(getRequestIdentifier(MCP_METHODS.RESOURCES_LIST), async () => {
     const resources = getAllResources();
     
     return {
@@ -40,7 +36,7 @@ export function registerResourcesHandlers(server: Server): void {
   });
 
   // Read a specific resource
-  server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
+  server.setRequestHandler(getRequestIdentifier(MCP_METHODS.RESOURCES_READ), async (request) => {
     const { uri } = request.params;
     const resource = getResourceByUri(uri);
 

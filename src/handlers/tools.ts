@@ -8,11 +8,7 @@
  * the tools capability and handle tool execution requests.
  */
 
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
+import { McpServer, MCP_METHODS, getRequestIdentifier } from "../types/mcp.js";
 import { getRules, formatRulesAsText } from "../rules/index.js";
 import { GetRulesInput } from "../types/index.js";
 
@@ -20,14 +16,14 @@ import { GetRulesInput } from "../types/index.js";
  * Register tools handlers to the MCP server
  * 
  * Registers request handlers for:
- * - ListToolsRequestSchema: Returns available tools
- * - CallToolRequestSchema: Executes tool requests
+ * - TOOLS_LIST: Returns available tools
+ * - TOOLS_CALL: Executes tool requests
  * 
  * @param server - The MCP Server instance to register handlers on
  */
-export function registerToolsHandlers(server: Server): void {
+export function registerToolsHandlers(server: McpServer): void {
   // List available tools
-  server.setRequestHandler(ListToolsRequestSchema, async () => {
+  server.setRequestHandler(getRequestIdentifier(MCP_METHODS.TOOLS_LIST), async () => {
     return {
       tools: [
         {
@@ -85,7 +81,7 @@ export function registerToolsHandlers(server: Server): void {
   });
 
   // Handle tool calls
-  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  server.setRequestHandler(getRequestIdentifier(MCP_METHODS.TOOLS_CALL), async (request) => {
     const { name, arguments: args } = request.params;
 
     if (name === "get-microfrontend-rules") {

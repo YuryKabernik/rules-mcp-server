@@ -6,6 +6,8 @@
 
 ✅ **Current version: v1.26.0 (recommended)**
 
+✅ **Architecture refactored for smooth v2 migration** - Only one file will need updates!
+
 ## Status
 
 | Aspect | Status |
@@ -15,6 +17,7 @@
 | v2 Expected Release | 📅 Q1 2026 |
 | v1 Status | ✅ Latest stable (1.26.0) |
 | v1 Support | 🛡️ 6+ months after v2 ships |
+| Migration Preparation | ✅ Architecture ready |
 | Action Required | ⏸️ None - Wait for v2 release |
 
 ## What This Means
@@ -30,17 +33,26 @@
 - Fully supported and maintained
 - Working perfectly in this project
 
+**Architecture is migration-ready:**
+- Abstraction layer isolates SDK dependencies
+- Only ONE file (`src/types/mcp.ts`) needs updates for v2
+- All handler files work unchanged
+- Migration risk is minimal
+
 ## When v2 Releases
 
 Follow the [detailed migration guide](MCP_SDK_V2_MIGRATION.md) which includes:
-- Step-by-step migration instructions
+- Step-by-step migration instructions (simplified to single-file update)
 - Code change examples
 - Testing checklist
-- File-by-file updates
+- Architecture documentation
+
+See [V2_MIGRATION_ARCHITECTURE.md](V2_MIGRATION_ARCHITECTURE.md) for complete architectural details.
 
 ## References
 
 - 📖 [Full Migration Guide](MCP_SDK_V2_MIGRATION.md)
+- 🏗️ [Migration Architecture](V2_MIGRATION_ARCHITECTURE.md) - Abstraction layer design
 - 🔗 [MCP TypeScript SDK Repository](https://github.com/modelcontextprotocol/typescript-sdk)
 - 📚 [Architecture Documentation](ARCHITECTURE.md)
 - 🏠 [Project README](../README.md)
