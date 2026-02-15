@@ -6,6 +6,11 @@ MCP (Model Context Protocol) server providing development rules, resources, and 
 
 This MCP server aggregates development rules, best practices, and guidance for building distributed systems using microfrontend and microservice architectures. 
 
+**Architecture:** This server implements the standard [three-step MCP server pattern](docs/ARCHITECTURE.md):
+1. Create a Server instance and register tools, resources, and prompts
+2. Create a transport (stdio for local, HTTP for remote)
+3. Connect the server to the transport
+
 **Rules are now stored as markdown files with frontmatter metadata**, making it easy to add, edit, and organize content without modifying code. See [rules/README.md](rules/README.md) for details on the markdown format.
 
 The server provides:
@@ -309,7 +314,13 @@ This server implements the following MCP capabilities:
 
 ### Transport
 
-Uses stdio transport for communication with MCP clients.
+Uses stdio transport for communication with MCP clients. The server follows the standard [MCP three-step architecture pattern](docs/ARCHITECTURE.md):
+
+1. **Create Server**: Instantiate MCP Server and register handlers
+2. **Create Transport**: Set up stdio transport for local integrations
+3. **Connect**: Wire the server to the transport
+
+For detailed architecture documentation, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Contributing
 

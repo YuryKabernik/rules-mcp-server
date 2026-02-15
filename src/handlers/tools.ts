@@ -2,6 +2,10 @@
  * Tools Handler
  * 
  * Handles MCP tool requests for getting development rules.
+ * 
+ * This is part of STEP 1 of the MCP server architecture:
+ * Handlers are registered to the server instance to define
+ * the tools capability and handle tool execution requests.
  */
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
@@ -13,7 +17,13 @@ import { getRules, formatRulesAsText } from "../rules/index.js";
 import { GetRulesInput } from "../types/index.js";
 
 /**
- * Register tools handlers
+ * Register tools handlers to the MCP server
+ * 
+ * Registers request handlers for:
+ * - ListToolsRequestSchema: Returns available tools
+ * - CallToolRequestSchema: Executes tool requests
+ * 
+ * @param server - The MCP Server instance to register handlers on
  */
 export function registerToolsHandlers(server: Server): void {
   // List available tools

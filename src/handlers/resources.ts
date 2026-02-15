@@ -2,6 +2,10 @@
  * Resources Handler
  * 
  * Handles MCP resource requests for documentation.
+ * 
+ * This is part of STEP 1 of the MCP server architecture:
+ * Handlers are registered to the server instance to define
+ * the resources capability and handle resource requests.
  */
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
@@ -12,7 +16,13 @@ import {
 import { getAllResources, getResourceByUri } from "../resources/index.js";
 
 /**
- * Register resources handlers
+ * Register resources handlers to the MCP server
+ * 
+ * Registers request handlers for:
+ * - ListResourcesRequestSchema: Returns available resources
+ * - ReadResourceRequestSchema: Returns resource content
+ * 
+ * @param server - The MCP Server instance to register handlers on
  */
 export function registerResourcesHandlers(server: Server): void {
   // List available resources
