@@ -35,6 +35,7 @@
   "files": [
     "build/**/*",
     "rules/**/*.md",
+    "content/**/*.md",
     "README.md",
     "QUICK_START.md",
     "DEVELOPER_GUIDE.md",

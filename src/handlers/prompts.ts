@@ -2,6 +2,7 @@
  * Prompts Handler
  * 
  * Handles MCP prompt requests for interactive templates.
+ * Prompts are loaded from markdown files in content/prompts/
  * 
  * This is part of STEP 1 of the MCP server architecture:
  * Handlers are registered to the server instance to define
@@ -15,15 +16,15 @@ import { getAllPrompts, getPromptByName } from "../prompts/index.js";
  * Register prompts handlers to the MCP server
  * 
  * Registers request handlers for:
- * - PROMPTS_LIST: Returns available prompts
+ * - PROMPTS_LIST: Returns available prompts (loaded from markdown)
  * - PROMPTS_GET: Returns prompt content
  * 
  * @param server - The MCP Server instance to register handlers on
  */
 export function registerPromptsHandlers(server: McpServer): void {
-  // List available prompts
+  // List available prompts - loaded from markdown files
   server.setRequestHandler(getRequestIdentifier(MCP_METHODS.PROMPTS_LIST), async () => {
-    const prompts = getAllPrompts();
+    const prompts = await getAllPrompts();
     
     return {
       prompts: prompts.map(p => ({
@@ -37,7 +38,7 @@ export function registerPromptsHandlers(server: McpServer): void {
   // Get a specific prompt
   server.setRequestHandler(getRequestIdentifier(MCP_METHODS.PROMPTS_GET), async (request) => {
     const { name, arguments: args } = request.params;
-    const prompt = getPromptByName(name);
+    const prompt = await getPromptByName(name);
 
     if (!prompt) {
       throw new Error(`Unknown prompt: ${name}`);
