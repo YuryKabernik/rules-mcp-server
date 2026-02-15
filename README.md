@@ -11,7 +11,13 @@ This MCP server aggregates development rules, best practices, and guidance for b
 2. Create a transport (stdio for local, HTTP for remote)
 3. Connect the server to the transport
 
-**Rules are now stored as markdown files with frontmatter metadata**, making it easy to add, edit, and organize content without modifying code. See [rules/README.md](rules/README.md) for details on the markdown format.
+**Content Management:** All tools, prompts, and resources are defined in markdown files with YAML frontmatter metadata:
+- `content/tools/` - MCP tool definitions
+- `content/prompts/` - Interactive prompt templates
+- `content/resources/` - Documentation resources
+- `rules/` - Development rules organized by system
+
+This approach makes it easy to add, edit, and organize content without modifying code. See [content/README.md](content/README.md) for details on the markdown format and how to add new content.
 
 The server provides:
 
