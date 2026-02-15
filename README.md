@@ -81,11 +81,20 @@ Both tools support advanced filtering:
 - Node.js v24.x or later (latest version recommended)
 - npm v11.x or later
 
-### Quick Start
+### As NPM Package
 
-See [QUICK_START.md](QUICK_START.md) for a streamlined setup guide.
+**Global installation:**
+```bash
+npm install -g rules-mcp-server
+rules-mcp-server
+```
 
-### Setup
+**Use with npx (no installation):**
+```bash
+npx -y rules-mcp-server
+```
+
+### From Source
 
 1. Clone the repository:
 ```bash
@@ -93,13 +102,9 @@ git clone https://github.com/YuryKabernik/rules-mcp-server.git
 cd rules-mcp-server
 ```
 
-2. Install dependencies:
+2. Install dependencies and build:
 ```bash
 npm install
-```
-
-3. Build the project:
-```bash
 npm run build
 ```
 
@@ -128,17 +133,16 @@ The server uses stdio transport and can be integrated with any MCP-compatible cl
 
 #### Claude Desktop Configuration
 
-Add to your Claude Desktop configuration file (see [mcp-config.example.json](mcp-config.example.json) for reference):
-
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
+Add to your Claude Desktop configuration file:
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
 
 ```json
 {
   "mcpServers": {
     "rules-mcp-server": {
-      "command": "node",
-      "args": ["/absolute/path/to/rules-mcp-server/build/index.js"]
+      "command": "npx",
+      "args": ["-y", "rules-mcp-server"]
     }
   }
 }
@@ -155,9 +159,7 @@ Or if installed globally:
 }
 ```
 
-#### Cline Configuration
-
-Add to your Cline MCP settings:
+Or from source:
 ```json
 {
   "mcpServers": {
@@ -168,6 +170,8 @@ Add to your Cline MCP settings:
   }
 }
 ```
+
+See [mcp-config.example.json](mcp-config.example.json) for reference.
 
 ## Development
 
@@ -302,8 +306,7 @@ Prompts provide interactive templates:
 - **Runtime**: Node.js v24.x (ESM modules)
 - **Language**: TypeScript 5.x
 - **SDK**: [@modelcontextprotocol/sdk](https://github.com/modelcontextprotocol/sdk) v1.26.0 (latest stable)
-  - 📝 [v2 Migration Guide](docs/MCP_SDK_V2_MIGRATION.md) - v2 not yet available, planned for Q1 2026
-  - 🏗️ [Migration Architecture](docs/V2_MIGRATION_ARCHITECTURE.md) - Ready for smooth v2 migration (single-file update)
+  - 📝 [v2 Migration Guide](docs/MCP_SDK_V2_MIGRATION.md) - v2 planned for Q1 2026, architecture ready for smooth migration
 - **Build Tool**: TypeScript compiler (tsc)
 - **Dev Runner**: tsx (TypeScript execute)
 
