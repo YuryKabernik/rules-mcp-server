@@ -1,52 +1,33 @@
 # rules-mcp-server
 
-MCP (Model Context Protocol) server providing development rules, resources, and prompts for microfrontend and microservice applications.
+MCP (Model Context Protocol) server providing development prompts with embedded rules for microfrontend and microservice applications.
 
 ## Overview
 
-This MCP server aggregates development rules, best practices, and guidance for building distributed systems using microfrontend and microservice architectures. 
+This MCP server provides interactive prompts for designing and reviewing microfrontend and microservice architectures. All prompts have direct access to development rules and best practices.
 
 **Architecture:** This server implements the standard [three-step MCP server pattern](docs/ARCHITECTURE.md):
-1. Create a Server instance and register tools, resources, and prompts
+1. Create a Server instance and register prompts
 2. Create a transport (stdio for local, HTTP for remote)
 3. Connect the server to the transport
 
-**Content Management:** All tools, prompts, resources, and rules are defined in markdown files with YAML frontmatter metadata in the `content/` directory:
-- `content/rules/` - Development rules organized by system
-- `content/tools/` - MCP tool definitions
+**Content Management:** All prompts and rules are defined in markdown files with YAML frontmatter metadata in the `content/` directory:
 - `content/prompts/` - Interactive prompt templates
-- `content/resources/` - Documentation resources
+- `content/rules/` - Development rules organized by system
 
 This approach makes it easy to add, edit, and organize content without modifying code. See [content/README.md](content/README.md) for details on the markdown format and how to add new content.
 
-The server provides:
-
-- **Tools**: Access development rules and best practices by category, language, and code type
-- **Resources**: Documentation and architectural guides
-- **Prompts**: Templates for common development scenarios
-
 ## Features
 
-### Tools (Rules)
-- `get-microfrontend-rules`: Get rules for microfrontend development
-- `get-microservice-rules`: Get rules for microservice development
+### Prompts
 
-Both tools support advanced filtering:
+The server provides interactive prompts that guide you through:
 
-**By Category:**
-- `architecture`: Architectural patterns and decisions
-- `performance`: Performance optimization techniques
-- `security`: Security best practices
-- `testing`: Testing strategies
-- `all`: All rules (default)
+- **design-microfrontend**: Design a new microfrontend application with architectural guidance
+- **design-microservice**: Design a new microservice with best practices
+- **review-architecture**: Review existing architecture against established patterns
 
-**By Language:**
-- `typescript`, `javascript`, `python`, `java`, `go`, `rust`
-- Filters rules specific to a programming language
-
-**By Code Type:**
-- `source`: Rules for source code
-- `test`: Rules for test code
+Each prompt has access to the complete rule set and provides contextual guidance based on your specific needs
 
 **Example queries:**
 ```json
@@ -70,15 +51,24 @@ Both tools support advanced filtering:
 }
 ```
 
-### Resources
-- Microfrontend Architecture Guide
-- Microservice Architecture Guide
-- General Best Practices for Distributed Systems
+### Rules
 
-### Prompts
-- `design-microfrontend`: Interactive prompt for designing microfrontend applications
-- `design-microservice`: Interactive prompt for designing microservices
-- `review-architecture`: Get architectural review and feedback
+The server has access to comprehensive development rules organized by:
+
+**Systems:**
+- Microfrontend architecture
+- Microservice architecture
+
+**Categories:**
+- Architecture patterns and decisions
+- Performance optimization
+- Security best practices
+- Testing strategies
+
+**Languages:**
+- TypeScript, JavaScript, Python, Java, Go, Rust
+
+Rules are embedded in prompt responses and provided contextually based on your design needs.
 
 ## Installation
 

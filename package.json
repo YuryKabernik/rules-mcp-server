@@ -1,7 +1,7 @@
 {
   "name": "rules-mcp-server",
   "version": "1.0.0",
-  "description": "MCP server providing organized development rules, best practices, and architectural guidance for microfrontend and microservice applications. Supports filtering by project system, language, and code type.",
+  "description": "MCP server providing interactive prompts with embedded development rules for microfrontend and microservice applications. Offers architectural guidance and best practices through contextual prompts.",
   "main": "build/index.js",
   "type": "module",
   "bin": {
@@ -25,10 +25,13 @@
   "keywords": [
     "mcp",
     "model-context-protocol",
+    "prompts",
     "microfrontend",
     "microservice",
     "rules",
-    "best-practices"
+    "best-practices",
+    "architecture",
+    "development-guidance"
   ],
   "author": "",
   "license": "ISC",

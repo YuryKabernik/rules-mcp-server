@@ -2,7 +2,7 @@
  * Server Setup
  * 
  * This file implements the standard three-step MCP server architecture:
- * 1. Create an MCP Server instance and register tools, resources, and prompts
+ * 1. Create an MCP Server instance and register prompts
  * 2. Create a transport (stdio for local, HTTP for remote)
  * 3. Connect the server to the transport
  * 
@@ -10,8 +10,6 @@
  */
 
 import { McpServer, StdioServerTransport } from "./types/mcp.js";
-import { registerToolsHandlers } from "./handlers/tools.js";
-import { registerResourcesHandlers } from "./handlers/resources.js";
 import { registerPromptsHandlers } from "./handlers/prompts.js";
 
 /**
@@ -19,8 +17,8 @@ import { registerPromptsHandlers } from "./handlers/prompts.js";
  * 
  * Creates an MCP Server instance with:
  * - Server metadata (name, version)
- * - Declared capabilities (tools, resources, prompts)
- * - Registered handlers for all capabilities
+ * - Declared capabilities (prompts only)
+ * - Registered handlers for prompts
  * 
  * This follows the MCP architecture pattern where the server
  * is created first and all handlers are registered before
@@ -36,16 +34,12 @@ export function createServer(): McpServer {
     },
     {
       capabilities: {
-        tools: {},
-        resources: {},
         prompts: {},
       },
     }
   );
 
-  // Register all handlers for tools, resources, and prompts
-  registerToolsHandlers(server);
-  registerResourcesHandlers(server);
+  // Register prompts handlers
   registerPromptsHandlers(server);
 
   return server;
