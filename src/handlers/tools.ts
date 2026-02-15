@@ -11,7 +11,7 @@
 
 import { McpServer, MCP_METHODS, getRequestIdentifier } from "../types/mcp.js";
 import { getRules, formatRulesAsText } from "../rules/index.js";
-import { GetRulesInput } from "../types/index.js";
+import { GetRulesInput, ProjectSystem } from "../types/index.js";
 import { getAllTools, getToolByName } from "../tools/index.js";
 
 /**
@@ -31,7 +31,7 @@ export function registerToolsHandlers(server: McpServer): void {
   });
 
   // Handle tool calls
-  server.setRequestHandler(getRequestIdentifier(MCP_METHODS.TOOLS_CALL), async (request) => {
+  server.setRequestHandler(getRequestIdentifier(MCP_METHODS.TOOLS_CALL), async (request: any) => {
     const { name, arguments: args } = request.params;
     
     // Get tool definition to determine system
@@ -41,9 +41,9 @@ export function registerToolsHandlers(server: McpServer): void {
     }
 
     // Check if this is a rules tool
-    if (tool.system) {
+    if (tool.system && (tool.system === "microfrontend" || tool.system === "microservice")) {
       const { category, language, codeType } = args as GetRulesInput;
-      const rules = await getRules(tool.system, category, language, codeType);
+      const rules = await getRules(tool.system as ProjectSystem, category, language, codeType);
       const text = formatRulesAsText(rules);
 
       return {

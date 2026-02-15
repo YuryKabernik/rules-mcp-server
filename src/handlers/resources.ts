@@ -37,7 +37,7 @@ export function registerResourcesHandlers(server: McpServer): void {
   });
 
   // Read a specific resource
-  server.setRequestHandler(getRequestIdentifier(MCP_METHODS.RESOURCES_READ), async (request) => {
+  server.setRequestHandler(getRequestIdentifier(MCP_METHODS.RESOURCES_READ), async (request: any) => {
     const { uri } = request.params;
     const resource = await getResourceByUri(uri);
 

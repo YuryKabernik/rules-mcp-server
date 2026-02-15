@@ -36,7 +36,7 @@ export function registerPromptsHandlers(server: McpServer): void {
   });
 
   // Get a specific prompt
-  server.setRequestHandler(getRequestIdentifier(MCP_METHODS.PROMPTS_GET), async (request) => {
+  server.setRequestHandler(getRequestIdentifier(MCP_METHODS.PROMPTS_GET), async (request: any) => {
     const { name, arguments: args } = request.params;
     const prompt = await getPromptByName(name);
 
