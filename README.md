@@ -214,7 +214,9 @@ rules-mcp-server/
 │       ├── ms-sec-001.md         # Security rules
 │       └── ms-test-001.md        # Testing rules
 ├── build/                          # Compiled JavaScript (generated)
-├── test/                           # Test scripts
+├── test/                           # Integration tests
+├── src/**/*.test.ts               # Unit tests (Vitest)
+├── vitest.config.ts               # Test configuration
 ├── package.json                    # Project metadata and dependencies
 ├── tsconfig.json                   # TypeScript configuration
 └── README.md                      # This file
@@ -222,11 +224,18 @@ rules-mcp-server/
 
 ### Available Scripts
 
+**Development:**
 - `npm run build` - Compile TypeScript to JavaScript
 - `npm run watch` - Watch mode for development (auto-rebuild)
 - `npm run dev` - Run server in development mode with tsx
 - `npm start` - Run the compiled server
 - `npm run prepare` - Automatically builds before npm publish
+
+**Testing:**
+- `npm test` - Run all unit tests (fast, ~1 second)
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:ui` - Open visual test UI
+- `npm run test:coverage` - Generate coverage report
 
 ### Adding Content
 
