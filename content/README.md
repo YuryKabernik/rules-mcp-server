@@ -6,12 +6,19 @@ This directory contains all MCP server content definitions in markdown format wi
 
 ```
 content/
+├── rules/           # Development rules (microfrontend, microservice, etc.)
 ├── tools/           # MCP tool definitions
 ├── prompts/         # MCP prompt templates
 └── resources/       # MCP documentation resources
 ```
 
 ## Content Types
+
+### Rules (`content/rules/`)
+
+Development rules and best practices for different project systems. Rules are organized by system type (microfrontend, microservice, etc.) and loaded by MCP tools.
+
+See [content/rules/README.md](rules/README.md) for detailed information on rule format and organization.
 
 ### Tools (`content/tools/`)
 

@@ -11,11 +11,11 @@ This MCP server aggregates development rules, best practices, and guidance for b
 2. Create a transport (stdio for local, HTTP for remote)
 3. Connect the server to the transport
 
-**Content Management:** All tools, prompts, and resources are defined in markdown files with YAML frontmatter metadata:
+**Content Management:** All tools, prompts, resources, and rules are defined in markdown files with YAML frontmatter metadata in the `content/` directory:
+- `content/rules/` - Development rules organized by system
 - `content/tools/` - MCP tool definitions
 - `content/prompts/` - Interactive prompt templates
 - `content/resources/` - Documentation resources
-- `rules/` - Development rules organized by system
 
 This approach makes it easy to add, edit, and organize content without modifying code. See [content/README.md](content/README.md) for details on the markdown format and how to add new content.
 
@@ -195,50 +195,22 @@ See [mcp-config.example.json](mcp-config.example.json) for reference.
 
 ### Project Structure
 
-The codebase is organized into a modular structure for easy maintenance and extensibility:
-
 ```
 rules-mcp-server/
-├── src/
-│   ├── index.ts                    # Main entry point
-│   ├── server.ts                   # Server initialization
-│   ├── types/
-│   │   └── index.ts               # TypeScript type definitions
-│   ├── handlers/                   # MCP request handlers
-│   │   ├── tools.ts               # Rules tool handler
-│   │   ├── resources.ts           # Documentation handler
-│   │   └── prompts.ts             # Prompts handler
-│   ├── rules/                      # Rules loaders
-│   │   ├── index.ts               # Rules registry
+├── content/                     # 📝 All MCP content (markdown files)
+│   ├── rules/                  # Development rules by system
 │   │   ├── microfrontend/
-│   │   │   └── index.ts           # Microfrontend rules loader
 │   │   └── microservice/
-│   │       └── index.ts           # Microservice rules loader
-│   ├── resources/                  # Documentation resources
-│   │   └── index.ts               # Resources registry
-│   ├── prompts/                    # Prompt templates
-│   │   └── index.ts               # Prompts registry
-│   └── utils/                      # Utilities
-│       └── markdownLoader.ts      # Markdown file parser
-├── rules/                          # 📝 Markdown rule files
-│   ├── README.md                  # Rules format guide
-│   ├── microfrontend/
-│   │   ├── mfe-arch-001.md       # Architecture rules
-│   │   ├── mfe-perf-001.md       # Performance rules
-│   │   └── mfe-test-001.md       # Testing rules
-│   └── microservice/
-│       ├── ms-arch-001.md        # Architecture rules
-│       ├── ms-perf-001.md        # Performance rules
-│       ├── ms-sec-001.md         # Security rules
-│       └── ms-test-001.md        # Testing rules
-├── build/                          # Compiled JavaScript (generated)
-├── test/                           # Integration tests
-├── src/**/*.test.ts               # Unit tests (Vitest)
-├── vitest.config.ts               # Test configuration
-├── package.json                    # Project metadata and dependencies
-├── tsconfig.json                   # TypeScript configuration
-└── README.md                      # This file
+│   ├── tools/                  # Tool definitions
+│   ├── prompts/                # Prompt templates
+│   └── resources/              # Documentation resources
+├── build/                       # Compiled JavaScript (generated)
+├── package.json                 # Project metadata and dependencies
+├── tsconfig.json                # TypeScript configuration
+└── README.md                   # This file
 ```
+
+**Content Management:** All server content is in the `content/` directory as markdown files with frontmatter metadata. See [content/README.md](content/README.md) for details on how to add or modify content.
 
 ### Available Scripts
 
@@ -293,7 +265,7 @@ npm run build
 npm start
 ```
 
-**Detailed Guide:** See [rules/README.md](rules/README.md) for complete documentation on:
+**Detailed Guide:** See [content/rules/README.md](content/rules/README.md) for complete documentation on:
 - Markdown format and frontmatter fields
 - Naming conventions
 - Adding examples and code snippets
@@ -303,28 +275,44 @@ npm start
 
 To add support for a new system (e.g., "monolith"):
 
-1. Create a new directory: `rules/monolith/`
-2. Add markdown rule files in that directory
-3. Create `src/rules/monolith/index.ts` to load the rules (copy from existing systems)
-4. Update `src/types/index.ts` to add the system to `ProjectSystem` type
-5. Update `src/rules/index.ts` to include the new system
-6. Add a tool handler in `src/handlers/tools.ts`
+1. Create a new directory: `content/rules/monolith/`
+2. Add markdown rule files in that directory following the frontmatter format
+3. Create a new tool definition in `content/tools/get-monolith-rules.md`
+4. Restart the server - new content is automatically loaded
 
-See [DEVELOPER_GUIDE.md](DEVELOPER_GUIDE.md) for detailed instructions.
+See [content/README.md](content/README.md) for detailed instructions.
 
 #### 2. Adding Resources
 
-Resources provide documentation and guides:
-- Edit `src/resources/index.ts`
-- Add new `Resource` objects to the `resources` array
-- Each resource has a URI, name, description, and markdown content
+Resources provide documentation and guides. Add new markdown files in `content/resources/` with proper frontmatter:
+
+```yaml
+---
+uri: rules://monolith/architecture
+name: Monolith Architecture Guide
+description: Guide for building monolithic applications
+mimeType: text/markdown
+---
+
+# Your resource content here...
+```
 
 #### 3. Adding Prompts
 
-Prompts provide interactive templates:
-- Edit `src/prompts/index.ts`
-- Add new `PromptTemplate` objects to the `prompts` array
-- Define arguments and a template function that generates the prompt text
+Prompts provide interactive templates. Add new markdown files in `content/prompts/` with proper frontmatter:
+
+```yaml
+---
+name: design-monolith
+description: Help design a monolithic application
+arguments:
+  - name: app_name
+    description: Name of the application
+    required: true
+---
+
+# Your prompt template here with {{variables}}...
+```
 
 ## Technical Details
 

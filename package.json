@@ -34,12 +34,9 @@
   "license": "ISC",
   "files": [
     "build/**/*",
-    "rules/**/*.md",
     "content/**/*.md",
     "README.md",
-    "QUICK_START.md",
     "DEVELOPER_GUIDE.md",
-    "NPM_USAGE.md",
     "mcp-config.example.json"
   ],
   "bugs": {

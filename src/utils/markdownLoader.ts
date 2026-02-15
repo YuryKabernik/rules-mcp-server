@@ -87,8 +87,8 @@ export async function loadRuleFromFile(filePath: string): Promise<Rule | null> {
  * Get the path to the rules directory
  */
 export function getRulesPath(): string {
-  // Go up from src/utils to project root, then to rules
-  return path.resolve(__dirname, '../../rules');
+  // Go up from src/utils to project root, then to content/rules
+  return path.resolve(__dirname, '../../content/rules');
 }
 
 /**
