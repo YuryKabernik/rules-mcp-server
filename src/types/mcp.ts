@@ -5,7 +5,7 @@
  * When migrating to v2, only this file needs to be updated.
  * 
  * v1 (current):
- *   import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+ *   import { Server } from "@modelcontextprotocol/sdk/server";
  * 
  * v2 (future):
  *   import { McpServer as Server } from "@modelcontextprotocol/server";
@@ -18,15 +18,15 @@
 /**
  * MCP Server type
  * 
- * v1: Server from @modelcontextprotocol/sdk/server/index.js
+ * v1: Server from @modelcontextprotocol/sdk/server
  * v2: McpServer from @modelcontextprotocol/server
  */
-export { Server as McpServer } from "@modelcontextprotocol/sdk/server/index.js";
+export { Server as McpServer } from "@modelcontextprotocol/sdk/server";
 
 /**
  * Server transport type
  * 
- * v1: StdioServerTransport from @modelcontextprotocol/sdk/server/stdio.js
+ * v1: StdioServerTransport from @modelcontextprotocol/sdk/server/stdio
  * v2: StdioServerTransport from @modelcontextprotocol/server
  */
 export { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
