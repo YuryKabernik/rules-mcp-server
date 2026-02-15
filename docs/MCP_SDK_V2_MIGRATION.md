@@ -1,0 +1,220 @@
+# MCP SDK v2 Migration Guide
+
+## Current Status
+
+**As of February 2026:**
+- ✅ **v1.26.0** is the latest stable release (currently in use)
+- ❌ **v2 is NOT yet available** on npm
+- ⚠️ v2 is in **pre-alpha development**
+- 📅 Stable v2 release anticipated in **Q1 2026**
+
+## Why Not Migrate Now?
+
+The MCP SDK v2 packages are not published to npm yet:
+
+```bash
+npm install @modelcontextprotocol/server
+# Error: 404 Not Found - package doesn't exist yet
+
+npm install @modelcontextprotocol/client
+# Error: 404 Not Found - package doesn't exist yet
+
+npm install @modelcontextprotocol/core
+# Error: 404 Not Found - package doesn't exist yet
+```
+
+According to the [official repository](https://github.com/modelcontextprotocol/typescript-sdk):
+
+> **This is the `main` branch which contains v2 of the SDK (currently in development, pre-alpha).**
+> 
+> We anticipate a stable v2 release in Q1 2026. Until then, **v1.x remains the recommended version** for production use.
+
+## Current Implementation (v1)
+
+This project correctly uses the latest stable v1 SDK:
+
+```json
+{
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0"
+  }
+}
+```
+
+All imports and usage follow v1 patterns:
+
+```typescript
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import {
+  CallToolRequestSchema,
+  ListToolsRequestSchema,
+} from "@modelcontextprotocol/sdk/types.js";
+```
+
+## Future Migration Plan
+
+When v2 becomes available, follow these steps:
+
+### 1. Check Package Availability
+
+Monitor npm for v2 package releases:
+
+```bash
+npm view @modelcontextprotocol/server
+npm view @modelcontextprotocol/client
+npm view @modelcontextprotocol/core
+```
+
+### 2. Review Final Migration Guide
+
+The [current migration guide](https://github.com/modelcontextprotocol/typescript-sdk/blob/main/docs/migration.md) may change before release. Review the official documentation when v2 is released.
+
+### 3. Key Changes to Expect
+
+Based on the current migration guide, v2 will introduce:
+
+#### Package Split
+- `@modelcontextprotocol/sdk` → Split into:
+  - `@modelcontextprotocol/server` (server implementation)
+  - `@modelcontextprotocol/client` (client implementation)
+  - `@modelcontextprotocol/core` (types, protocol, transports)
+
+#### Import Changes
+```typescript
+// v1 (current)
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { CallToolRequestSchema } from "@modelcontextprotocol/sdk/types.js";
+
+// v2 (future)
+import { McpServer, StdioServerTransport } from "@modelcontextprotocol/server";
+import { CallToolResultSchema } from "@modelcontextprotocol/core";
+```
+
+#### Handler Registration Changes
+```typescript
+// v1 (current)
+server.setRequestHandler(CallToolRequestSchema, async (request) => { ... });
+server.setRequestHandler(ListToolsRequestSchema, async () => { ... });
+
+// v2 (future)
+server.setRequestHandler('tools/call', async (request) => { ... });
+server.setRequestHandler('tools/list', async () => { ... });
+```
+
+### 4. Migration Checklist
+
+When v2 is released:
+
+- [ ] Backup current working code
+- [ ] Uninstall v1 SDK: `npm uninstall @modelcontextprotocol/sdk`
+- [ ] Install v2 packages: `npm install @modelcontextprotocol/server`
+- [ ] Update all imports in:
+  - [ ] `src/server.ts`
+  - [ ] `src/handlers/tools.ts`
+  - [ ] `src/handlers/resources.ts`
+  - [ ] `src/handlers/prompts.ts`
+- [ ] Replace schema-based handlers with method strings
+- [ ] Update documentation references
+- [ ] Test thoroughly:
+  - [ ] Build succeeds
+  - [ ] Server starts
+  - [ ] All handlers work
+  - [ ] Run test scripts
+- [ ] Deploy to staging first
+- [ ] Monitor for issues
+- [ ] Deploy to production
+
+## Files That Will Need Changes
+
+### src/server.ts
+```typescript
+// Update imports
+- import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+- import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
++ import { McpServer, StdioServerTransport } from "@modelcontextprotocol/server";
+```
+
+### src/handlers/tools.ts
+```typescript
+// Update imports and handler registration
+- import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+- import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
++ import { McpServer } from "@modelcontextprotocol/server";
+
+// Handler registration
+- server.setRequestHandler(ListToolsRequestSchema, async () => { ... });
+- server.setRequestHandler(CallToolRequestSchema, async (request) => { ... });
++ server.setRequestHandler('tools/list', async () => { ... });
++ server.setRequestHandler('tools/call', async (request) => { ... });
+```
+
+### src/handlers/resources.ts
+```typescript
+// Update imports and handler registration
+- import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+- import { ListResourcesRequestSchema, ReadResourceRequestSchema } from "@modelcontextprotocol/sdk/types.js";
++ import { McpServer } from "@modelcontextprotocol/server";
+
+// Handler registration
+- server.setRequestHandler(ListResourcesRequestSchema, async () => { ... });
+- server.setRequestHandler(ReadResourceRequestSchema, async (request) => { ... });
++ server.setRequestHandler('resources/list', async () => { ... });
++ server.setRequestHandler('resources/read', async (request) => { ... });
+```
+
+### src/handlers/prompts.ts
+```typescript
+// Update imports and handler registration
+- import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+- import { ListPromptsRequestSchema, GetPromptRequestSchema } from "@modelcontextprotocol/sdk/types.js";
++ import { McpServer } from "@modelcontextprotocol/server";
+
+// Handler registration
+- server.setRequestHandler(ListPromptsRequestSchema, async () => { ... });
+- server.setRequestHandler(GetPromptRequestSchema, async (request) => { ... });
++ server.setRequestHandler('prompts/list', async () => { ... });
++ server.setRequestHandler('prompts/get', async (request) => { ... });
+```
+
+## Support Timeline
+
+According to the official repository:
+
+> v1.x will continue to receive **bug fixes and security updates** for at least **6 months after v2 ships** to give people time to upgrade.
+
+This means:
+- No rush to migrate immediately when v2 releases
+- Security updates guaranteed during transition period
+- Time to test v2 thoroughly before migrating
+
+## Monitoring for v2 Release
+
+To stay informed:
+
+1. **Watch the GitHub repository:**
+   - https://github.com/modelcontextprotocol/typescript-sdk
+
+2. **Check npm periodically:**
+   ```bash
+   npm view @modelcontextprotocol/server
+   ```
+
+3. **Review release notes when available:**
+   - https://github.com/modelcontextprotocol/typescript-sdk/releases
+
+4. **Check the official documentation:**
+   - https://modelcontextprotocol.io
+
+## Conclusion
+
+**Current Action: NONE REQUIRED**
+
+The project is correctly using the latest stable v1 SDK. Migration to v2 should wait until:
+1. V2 packages are published to npm
+2. V2 reaches stable release status
+3. Final migration guide is available
+4. Thorough testing can be performed
+
+Continue using v1 until v2 is officially released and stable.

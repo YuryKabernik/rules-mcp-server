@@ -301,7 +301,8 @@ Prompts provide interactive templates:
 
 - **Runtime**: Node.js v24.x (ESM modules)
 - **Language**: TypeScript 5.x
-- **SDK**: [@modelcontextprotocol/sdk](https://github.com/modelcontextprotocol/sdk) v1.26.0
+- **SDK**: [@modelcontextprotocol/sdk](https://github.com/modelcontextprotocol/sdk) v1.26.0 (latest stable)
+  - 📝 [v2 Migration Guide](docs/MCP_SDK_V2_MIGRATION.md) - v2 not yet available, planned for Q1 2026
 - **Build Tool**: TypeScript compiler (tsc)
 - **Dev Runner**: tsx (TypeScript execute)
 
