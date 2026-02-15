@@ -108,6 +108,18 @@ npm install
 npm run build
 ```
 
+### Using Dev Container (Recommended for Development)
+
+This project includes a VS Code Dev Container configuration for a consistent development environment:
+
+1. Install [Docker](https://www.docker.com/products/docker-desktop) and [VS Code](https://code.visualstudio.com/)
+2. Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+3. Clone the repository and open in VS Code
+4. Click "Reopen in Container" when prompted (or use F1 → "Dev Containers: Reopen in Container")
+5. The environment will be automatically set up with all dependencies
+
+See [.devcontainer/README.md](.devcontainer/README.md) for more details.
+
 ## Usage
 
 ### Running the Server

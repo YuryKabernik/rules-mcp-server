@@ -2,6 +2,22 @@
 
 This guide explains how to extend and maintain the Rules MCP Server.
 
+## Getting Started
+
+### Development Environment Options
+
+**Option 1: Dev Container (Recommended)**
+- Consistent environment with all tools pre-installed
+- Open the project in VS Code
+- Click "Reopen in Container" when prompted
+- Everything is automatically set up
+- See [.devcontainer/README.md](.devcontainer/README.md)
+
+**Option 2: Local Setup**
+- Install Node.js v24+ and npm
+- Clone the repository
+- Run `npm install` and `npm run build`
+
 ## Architecture Overview
 
 The server is built with a modular architecture that separates concerns:
