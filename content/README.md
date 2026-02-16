@@ -2,16 +2,6 @@
 
 This directory contains all MCP server content definitions in markdown format with YAML frontmatter metadata.
 
-## Configuration
-
-The content directory location can be customized:
-
-1. **Command-line**: `rules-mcp-server --content-path /path/to/content`
-2. **Environment**: `export MCP_CONTENT_PATH=/path/to/content`
-3. **Default**: Uses the `content/` directory in the package
-
-This allows you to maintain content separately from the server code and share it across installations.
-
 ## Directory Structure
 
 ```

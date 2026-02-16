@@ -2,15 +2,19 @@
  * Prompts Registry
  * 
  * Loads and manages prompt templates from markdown files.
- * Prompts are loaded from the configured content directory.
+ * Prompts are defined in content/prompts/ directory with frontmatter metadata.
  */
 
+import path from "path";
+import { fileURLToPath } from "url";
 import {
   loadMarkdownDirectory,
   validateFrontmatter,
 } from "../utils/contentLoader.js";
 import { PromptTemplate } from "../types/index.js";
-import { getPromptsPath } from "../config.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PROMPTS_DIR = path.join(__dirname, "../../content/prompts");
 
 /**
  * Prompt frontmatter metadata
@@ -68,8 +72,7 @@ export async function loadPrompts(): Promise<PromptTemplate[]> {
     return promptsCache;
   }
 
-  const promptsDir = getPromptsPath();
-  const contentItems = await loadMarkdownDirectory<PromptMetadata>(promptsDir);
+  const contentItems = await loadMarkdownDirectory<PromptMetadata>(PROMPTS_DIR);
   const prompts: PromptTemplate[] = [];
 
   for (const item of contentItems) {

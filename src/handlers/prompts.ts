@@ -2,7 +2,7 @@
  * Prompts Handler
  * 
  * Handles MCP prompt requests for interactive templates.
- * Prompts are loaded from the configured content directory.
+ * Prompts are loaded from markdown files in content/prompts/
  * 
  * This is part of STEP 1 of the MCP server architecture:
  * Handlers are registered to the server instance to define
