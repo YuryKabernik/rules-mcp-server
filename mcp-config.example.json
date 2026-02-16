@@ -5,6 +5,23 @@
       "args": [
         "/absolute/path/to/rules-mcp-server/build/index.js"
       ]
+    },
+    "rules-mcp-server-with-custom-path": {
+      "command": "node",
+      "args": [
+        "/absolute/path/to/rules-mcp-server/build/index.js",
+        "--content-path",
+        "/path/to/your/custom/content"
+      ]
+    },
+    "rules-mcp-server-with-env": {
+      "command": "node",
+      "args": [
+        "/absolute/path/to/rules-mcp-server/build/index.js"
+      ],
+      "env": {
+        "MCP_CONTENT_PATH": "/path/to/your/custom/content"
+      }
     }
   }
 }

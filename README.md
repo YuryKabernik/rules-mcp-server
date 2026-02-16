@@ -139,6 +139,29 @@ npm run watch
 
 The server uses stdio transport and can be integrated with any MCP-compatible client.
 
+### Configuration
+
+The content directory path can be customized in three ways (in order of precedence):
+
+1. **Command-line argument** (highest priority):
+```bash
+rules-mcp-server --content-path /path/to/your/content
+```
+
+2. **Environment variable**:
+```bash
+export MCP_CONTENT_PATH=/path/to/your/content
+rules-mcp-server
+```
+
+3. **Default**: Uses the `content/` directory in the package installation
+
+This allows you to:
+- Use custom content directories
+- Share content across multiple installations
+- Keep content separate from the server code
+- Version control your content independently
+
 #### Claude Desktop Configuration
 
 Add to your Claude Desktop configuration file:
@@ -174,6 +197,32 @@ Or from source:
     "rules-mcp-server": {
       "command": "node",
       "args": ["/absolute/path/to/rules-mcp-server/build/index.js"]
+    }
+  }
+}
+```
+
+**With custom content path:**
+```json
+{
+  "mcpServers": {
+    "rules-mcp-server": {
+      "command": "rules-mcp-server",
+      "args": ["--content-path", "/path/to/your/content"]
+    }
+  }
+}
+```
+
+**With environment variable:**
+```json
+{
+  "mcpServers": {
+    "rules-mcp-server": {
+      "command": "rules-mcp-server",
+      "env": {
+        "MCP_CONTENT_PATH": "/path/to/your/content"
+      }
     }
   }
 }

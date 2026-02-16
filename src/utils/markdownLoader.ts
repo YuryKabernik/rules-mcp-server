@@ -7,11 +7,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
-import { fileURLToPath } from 'url';
 import { Rule } from '../types/index.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { getRulesPath, getSystemRulesPath } from '../config.js';
 
 /**
  * Load all markdown rules from a directory
@@ -85,15 +82,19 @@ export async function loadRuleFromFile(filePath: string): Promise<Rule | null> {
 
 /**
  * Get the path to the rules directory
+ * @deprecated Use config.getRulesPath() instead
  */
-export function getRulesPath(): string {
-  // Go up from src/utils to project root, then to content/rules
-  return path.resolve(__dirname, '../../content/rules');
+export function getRulesBasePath(): string {
+  return getRulesPath();
 }
 
 /**
  * Get the path to a specific system's rules directory
+ * @deprecated Use config.getSystemRulesPath() instead
  */
-export function getSystemRulesPath(system: string): string {
-  return path.join(getRulesPath(), system);
+export function getSystemRulesBasePath(system: string): string {
+  return getSystemRulesPath(system);
 }
+
+// Re-export config functions for backward compatibility
+export { getRulesPath, getSystemRulesPath } from '../config.js';
