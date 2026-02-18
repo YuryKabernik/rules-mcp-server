@@ -5,46 +5,27 @@
 /**
  * Category of rules for filtering
  */
-export type RuleCategoryFilter = 
-  | "architecture"
-  | "performance"
-  | "security"
-  | "testing"
-  | "all";
+export type RuleCategoryFilter = 'architecture' | 'performance' | 'security' | 'testing' | 'all';
 
 /**
  * Category of rules (for rule definitions - excludes "all")
  */
-export type RuleCategory = 
-  | "architecture"
-  | "performance"
-  | "security"
-  | "testing";
+export type RuleCategory = 'architecture' | 'performance' | 'security' | 'testing';
 
 /**
  * Project system type
  */
-export type ProjectSystem = 
-  | "microfrontend"
-  | "microservice";
+export type ProjectSystem = 'microfrontend' | 'microservice';
 
 /**
  * Programming language
  */
-export type Language = 
-  | "typescript"
-  | "javascript"
-  | "python"
-  | "java"
-  | "go"
-  | "rust";
+export type Language = 'typescript' | 'javascript' | 'python' | 'java' | 'go' | 'rust';
 
 /**
  * Code type
  */
-export type CodeType = 
-  | "source"
-  | "test";
+export type CodeType = 'source' | 'test';
 
 /**
  * Rule definition

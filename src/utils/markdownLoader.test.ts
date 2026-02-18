@@ -91,9 +91,7 @@ Content`;
       const result = await loadRuleFromFile('/path/to/incomplete.md');
 
       expect(result).toBeNull();
-      expect(consoleWarnSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Invalid rule metadata')
-      );
+      expect(consoleWarnSpy).toHaveBeenCalledWith(expect.stringContaining('Invalid rule metadata'));
 
       consoleWarnSpy.mockRestore();
     });
@@ -147,9 +145,9 @@ Minimal content`;
   describe('loadRulesFromDirectory', () => {
     it('should load all markdown files from directory', async () => {
       const mockFiles = ['rule1.md', 'rule2.md', 'readme.txt'];
-      
+
       vi.mocked(fs.readdir).mockResolvedValue(mockFiles as any);
-      
+
       const mockRule1Content = `---
 id: rule1
 title: Rule 1
@@ -199,9 +197,9 @@ Content 2`;
 
     it('should filter out non-markdown files', async () => {
       const mockFiles = ['rule1.md', 'image.png', 'doc.txt'];
-      
+
       vi.mocked(fs.readdir).mockResolvedValue(mockFiles as any);
-      
+
       const mockRuleContent = `---
 id: rule1
 title: Rule 1
@@ -243,18 +241,16 @@ Content`;
 
     it('should filter out invalid rules', async () => {
       const mockFiles = ['valid.md', 'invalid.md'];
-      
+
       vi.mocked(fs.readdir).mockResolvedValue(mockFiles as any);
-      
-      vi.mocked(fs.readFile)
-        .mockResolvedValueOnce(`---
+
+      vi.mocked(fs.readFile).mockResolvedValueOnce(`---
 id: valid
 title: Valid Rule
 category: testing
 system: microfrontend
 ---
-Valid content`)
-        .mockResolvedValueOnce(`---
+Valid content`).mockResolvedValueOnce(`---
 title: Invalid Rule
 ---
 Invalid content`);

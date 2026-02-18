@@ -5,16 +5,13 @@
  * Prompts are defined in content/prompts/ directory with frontmatter metadata.
  */
 
-import path from "path";
-import { fileURLToPath } from "url";
-import {
-  loadMarkdownDirectory,
-  validateFrontmatter,
-} from "../utils/contentLoader.js";
-import { PromptTemplate } from "../types/index.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { loadMarkdownDirectory, validateFrontmatter } from '../utils/contentLoader.js';
+import { PromptTemplate } from '../types/index.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PROMPTS_DIR = path.join(__dirname, "../../content/prompts");
+const PROMPTS_DIR = path.join(__dirname, '../../content/prompts');
 
 /**
  * Prompt frontmatter metadata
@@ -40,19 +37,13 @@ let promptsCache: PromptTemplate[] | null = null;
  * @param args - Argument values
  * @returns Processed template
  */
-function processTemplate(
-  template: string,
-  args: Record<string, string>,
-): string {
+function processTemplate(template: string, args: Record<string, string>): string {
   let result = template;
 
   // Replace {{variable|default}} patterns
-  result = result.replace(
-    /\{\{(\w+)\|([^}]+)\}\}/g,
-    (match, varName, defaultValue) => {
-      return args[varName] || defaultValue;
-    },
-  );
+  result = result.replace(/\{\{(\w+)\|([^}]+)\}\}/g, (match, varName, defaultValue) => {
+    return args[varName] || defaultValue;
+  });
 
   // Replace {{variable}} patterns
   result = result.replace(/\{\{(\w+)\}\}/g, (match, varName) => {
@@ -60,12 +51,9 @@ function processTemplate(
   });
 
   // Handle {{#if condition}} blocks (simple implementation)
-  result = result.replace(
-    /\{\{#if (\w+)\}\}([\s\S]*?)\{\{\/if\}\}/g,
-    (match, varName, content) => {
-      return args[varName] ? content : "";
-    },
-  );
+  result = result.replace(/\{\{#if (\w+)\}\}([\s\S]*?)\{\{\/if\}\}/g, (match, varName, content) => {
+    return args[varName] ? content : '';
+  });
 
   return result;
 }
@@ -87,11 +75,7 @@ export async function loadPrompts(): Promise<PromptTemplate[]> {
   for (const item of contentItems) {
     try {
       // Validate required fields
-      validateFrontmatter(
-        item.data,
-        ["name", "description", "arguments"],
-        item.filePath,
-      );
+      validateFrontmatter(item.data, ['name', 'description', 'arguments'], item.filePath);
 
       const templateContent = item.content;
 
@@ -99,8 +83,7 @@ export async function loadPrompts(): Promise<PromptTemplate[]> {
         name: item.data.name,
         description: item.data.description,
         arguments: item.data.arguments,
-        template: (args: Record<string, string>) =>
-          processTemplate(templateContent, args),
+        template: (args: Record<string, string>) => processTemplate(templateContent, args),
       });
     } catch (error) {
       console.warn(`Skipping invalid prompt file: ${item.filePath}`, error);

@@ -1,6 +1,6 @@
 /**
  * Markdown Loader Utility
- * 
+ *
  * Loads and parses markdown files with frontmatter metadata.
  */
 
@@ -19,15 +19,15 @@ const __dirname = path.dirname(__filename);
 export async function loadRulesFromDirectory(dirPath: string): Promise<Rule[]> {
   try {
     const files = await fs.readdir(dirPath);
-    const mdFiles = files.filter(file => file.endsWith('.md'));
-    
+    const mdFiles = files.filter((file) => file.endsWith('.md'));
+
     const rules = await Promise.all(
       mdFiles.map(async (file) => {
         const filePath = path.join(dirPath, file);
         return await loadRuleFromFile(filePath);
       })
     );
-    
+
     return rules.filter((rule): rule is Rule => rule !== null);
   } catch (error) {
     console.error(`Error loading rules from ${dirPath}:`, error);
@@ -42,13 +42,13 @@ export async function loadRuleFromFile(filePath: string): Promise<Rule | null> {
   try {
     const fileContent = await fs.readFile(filePath, 'utf-8');
     const { data, content } = matter(fileContent);
-    
+
     // Validate required fields
     if (!data.id || !data.title || !data.category || !data.system) {
       console.warn(`Invalid rule metadata in ${filePath}`);
       return null;
     }
-    
+
     // Build the rule object
     const rule: Rule = {
       id: data.id,
@@ -58,24 +58,24 @@ export async function loadRuleFromFile(filePath: string): Promise<Rule | null> {
       system: data.system,
       content: content.trim(),
     };
-    
+
     // Add optional fields
     if (data.language) {
       rule.language = data.language;
     }
-    
+
     if (data.codeType) {
       rule.codeType = data.codeType;
     }
-    
+
     if (data.tags && Array.isArray(data.tags)) {
       rule.tags = data.tags;
     }
-    
+
     if (data.examples && Array.isArray(data.examples)) {
       rule.examples = data.examples;
     }
-    
+
     return rule;
   } catch (error) {
     console.error(`Error loading rule from ${filePath}:`, error);

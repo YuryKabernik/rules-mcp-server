@@ -9,10 +9,10 @@
  * the prompts capability and handle prompt requests.
  */
 
-import { getAllPrompts } from "../prompts/index.js";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { GetPromptResult } from "@modelcontextprotocol/sdk/types.js";
-import * as z from "zod/v4";
+import { getAllPrompts } from '../prompts/index.js';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { GetPromptResult } from '@modelcontextprotocol/sdk/types.js';
+import * as z from 'zod/v4';
 
 /**
  * Register prompts handlers to the MCP server
@@ -23,9 +23,7 @@ import * as z from "zod/v4";
  *
  * @param server - The MCP Server instance to register handlers on
  */
-export async function registerPromptsHandlers(
-  server: McpServer,
-): Promise<void> {
+export async function registerPromptsHandlers(server: McpServer): Promise<void> {
   // List available prompts - loaded from markdown files
   const prompts = await getAllPrompts();
 
@@ -39,10 +37,8 @@ export async function registerPromptsHandlers(
           ...Object.fromEntries(
             (prompt.arguments || []).map((arg) => [
               arg.name,
-              (arg.required ? z.string() : z.string().optional()).describe(
-                arg.description,
-              ),
-            ]),
+              (arg.required ? z.string() : z.string().optional()).describe(arg.description),
+            ])
           ),
         },
       },
@@ -58,15 +54,15 @@ export async function registerPromptsHandlers(
         return {
           messages: [
             {
-              role: "user",
+              role: 'user',
               content: {
-                type: "text",
+                type: 'text',
                 text,
               },
             },
           ],
         };
-      },
+      }
     );
   });
 }

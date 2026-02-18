@@ -217,6 +217,25 @@ rules-mcp-server/
 - `npm run test:ui` - Open visual test UI
 - `npm run test:coverage` - Generate coverage report
 
+**Code Quality:**
+- `npm run lint` - Run ESLint to check code quality
+- `npm run lint:fix` - Auto-fix ESLint issues
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check code formatting
+
+### Code Quality Tools
+
+This project uses ESLint and Prettier for consistent code styling:
+
+- **ESLint**: Enforces code quality rules and catches common errors
+- **Prettier**: Ensures consistent code formatting
+- **EditorConfig**: Maintains consistent coding styles across different editors
+
+**IDE Integration:**
+- VS Code settings are pre-configured in `.vscode/settings.json`
+- Install recommended extensions from `.vscode/extensions.json`
+- Code is auto-formatted on save
+
 ### Adding Content
 
 Rules are now stored as **markdown files with frontmatter metadata** in the `rules/` directory. This makes it easy to add and edit content without modifying TypeScript code.

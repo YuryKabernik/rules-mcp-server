@@ -332,13 +332,59 @@ The package includes:
 - Automatic build on install (`prepare` script)
 - Proper exports configuration
 
-## Code Style
+## Code Style and Quality
 
-- Use TypeScript with strict mode
-- Follow existing code patterns
-- Use ESM imports (`.js` extensions in imports)
-- Document functions with JSDoc comments
-- Keep files focused and modular
+This project uses ESLint and Prettier to maintain consistent code quality and formatting.
+
+### Linting
+
+**Run ESLint:**
+```bash
+npm run lint          # Check for issues
+npm run lint:fix      # Auto-fix issues
+```
+
+**ESLint Configuration:**
+- Uses TypeScript ESLint recommended rules
+- Enforces consistent imports and code patterns
+- Configured in `eslint.config.js` (flat config format)
+
+### Formatting
+
+**Run Prettier:**
+```bash
+npm run format        # Format all files
+npm run format:check  # Check formatting without changes
+```
+
+**Prettier Rules:**
+- Single quotes for strings
+- Semicolons required
+- 2-space indentation
+- 100 character print width
+- Configured in `.prettierrc`
+
+### IDE Integration
+
+**VS Code (Recommended):**
+- Install recommended extensions (ESLint, Prettier)
+- Settings auto-configured in `.vscode/settings.json`
+- Code auto-formats on save
+- ESLint issues highlighted in real-time
+
+**EditorConfig:**
+- `.editorconfig` ensures consistent settings across IDEs
+- Handles line endings, indentation, and whitespace
+
+### Before Committing
+
+Always run these commands before committing:
+```bash
+npm run lint:fix      # Fix linting issues
+npm run format        # Format code
+npm test              # Run tests
+npm run build         # Ensure it builds
+```
 
 ## File Organization
 

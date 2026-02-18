@@ -9,9 +9,9 @@
  * @see {@link https://modelcontextprotocol.io/docs/concepts/architecture | MCP Architecture}
  */
 
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "./types/mcp.js";
-import { registerPromptsHandlers } from "./handlers/prompts.js";
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { StdioServerTransport } from './types/mcp.js';
+import { registerPromptsHandlers } from './handlers/prompts.js';
 
 /**
  * STEP 1: Create and configure the MCP server
@@ -30,14 +30,14 @@ import { registerPromptsHandlers } from "./handlers/prompts.js";
 export async function createServer(): Promise<McpServer> {
   const server = new McpServer(
     {
-      name: "rules-mcp-server",
-      version: "1.0.0",
+      name: 'rules-mcp-server',
+      version: '1.0.0',
     },
     {
       capabilities: {
         prompts: {},
       },
-    },
+    }
   );
 
   // Register prompts handlers
@@ -79,5 +79,5 @@ export async function startServer(): Promise<void> {
   // STEP 3: Connect the server to the transport
   await server.connect(transport);
 
-  console.error("Rules MCP Server running on stdio");
+  console.error('Rules MCP Server running on stdio');
 }
