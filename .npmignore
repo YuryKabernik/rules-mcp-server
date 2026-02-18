@@ -1,0 +1,29 @@
+# Source files
+src/
+test/
+docs/
+
+# Config files
+.editorconfig
+.prettierignore
+.prettierrc
+.gitignore
+.npmrc
+tsconfig.json
+vitest.config.ts
+eslint.config.js
+
+# Development files
+.vscode/
+.devcontainer/
+.github/
+
+# Documentation (keep only main README and DEVELOPER_GUIDE)
+PUBLISHING.md
+
+# Test files
+*.test.ts
+*.test.js
+
+# Lock files
+package-lock.json
