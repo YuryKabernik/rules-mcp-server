@@ -24,16 +24,12 @@ The CI workflow is triggered on:
 1. **Checkout code** - Retrieves the repository code
 2. **Setup Node.js** - Installs Node.js 24.x with npm caching
 3. **Install dependencies** - Runs `npm ci` for clean, reproducible builds
-4. **Check code formatting** - Runs `npm run format:check` to verify Prettier formatting
-5. **Lint code** - Runs `npm run lint` to check code quality with ESLint
-6. **Build project** - Runs `npm run build` to compile TypeScript
-7. **Run tests** - Runs `npm test` to execute all unit tests
-8. **Upload build artifacts** - Saves build output for 7 days (only on success)
+4. **Build project** - Runs `npm run build` to compile TypeScript
+5. **Run tests** - Runs `npm test` to execute all unit tests
+6. **Upload build artifacts** - Saves build output for 7 days (only on success)
 
 ### Why These Steps?
 
-- **Format Check**: Ensures consistent code style across the codebase
-- **Lint**: Catches common code quality issues and potential bugs
 - **Build**: Verifies TypeScript compiles without errors
 - **Test**: Ensures all tests pass and functionality works as expected
 - **Artifacts**: Preserves build output for debugging and verification
@@ -42,8 +38,6 @@ The CI workflow is triggered on:
 
 For every push or pull request, the workflow verifies:
 
-✅ Code is properly formatted (Prettier)
-✅ Code passes linting rules (ESLint)
 ✅ TypeScript compiles successfully
 ✅ All unit tests pass
 ✅ Build artifacts are generated correctly
@@ -79,37 +73,17 @@ You can add a status badge to your README.md:
 To run the same checks locally before pushing:
 
 ```bash
-# Check formatting
-npm run format:check
-
-# Lint code
-npm run lint
-
 # Build project
 npm run build
 
 # Run tests
 npm test
 
-# Or run all at once
-npm run format:check && npm run lint && npm run build && npm test
+# Or run both at once
+npm run build && npm test
 ```
 
 ## Troubleshooting
-
-### Workflow Fails on Format Check
-
-Fix formatting issues:
-```bash
-npm run format
-```
-
-### Workflow Fails on Lint
-
-Fix linting issues:
-```bash
-npm run lint:fix
-```
 
 ### Workflow Fails on Build
 

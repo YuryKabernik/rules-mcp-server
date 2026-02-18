@@ -384,8 +384,6 @@ For detailed architecture documentation, see [docs/ARCHITECTURE.md](docs/ARCHITE
 This project uses GitHub Actions for automated testing and quality checks:
 
 - **CI Workflow**: Runs on every push to every branch and all pull requests
-  - Code formatting check (Prettier)
-  - Linting (ESLint)
   - Build verification (TypeScript compilation)
   - Unit tests (Vitest)
   - Build artifact upload
