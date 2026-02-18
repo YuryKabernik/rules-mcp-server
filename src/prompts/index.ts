@@ -1,6 +1,6 @@
 /**
  * Prompts Registry
- * 
+ *
  * Loads and manages prompt templates from markdown files.
  * Prompts are defined in content/prompts/ directory with frontmatter metadata.
  */
@@ -35,35 +35,44 @@ let promptsCache: PromptTemplate[] | null = null;
 /**
  * Process template string with argument substitution
  * Supports {{variable}} and {{variable|default}} syntax
- * 
+ *
  * @param template - Template string
  * @param args - Argument values
  * @returns Processed template
  */
-function processTemplate(template: string, args: Record<string, string>): string {
+function processTemplate(
+  template: string,
+  args: Record<string, string>,
+): string {
   let result = template;
-  
+
   // Replace {{variable|default}} patterns
-  result = result.replace(/\{\{(\w+)\|([^}]+)\}\}/g, (match, varName, defaultValue) => {
-    return args[varName] || defaultValue;
-  });
-  
+  result = result.replace(
+    /\{\{(\w+)\|([^}]+)\}\}/g,
+    (match, varName, defaultValue) => {
+      return args[varName] || defaultValue;
+    },
+  );
+
   // Replace {{variable}} patterns
   result = result.replace(/\{\{(\w+)\}\}/g, (match, varName) => {
     return args[varName] || match;
   });
-  
+
   // Handle {{#if condition}} blocks (simple implementation)
-  result = result.replace(/\{\{#if (\w+)\}\}([\s\S]*?)\{\{\/if\}\}/g, (match, varName, content) => {
-    return args[varName] ? content : "";
-  });
-  
+  result = result.replace(
+    /\{\{#if (\w+)\}\}([\s\S]*?)\{\{\/if\}\}/g,
+    (match, varName, content) => {
+      return args[varName] ? content : "";
+    },
+  );
+
   return result;
 }
 
 /**
  * Load all prompts from markdown files
- * 
+ *
  * @returns Array of prompt templates
  */
 export async function loadPrompts(): Promise<PromptTemplate[]> {
@@ -81,7 +90,7 @@ export async function loadPrompts(): Promise<PromptTemplate[]> {
       validateFrontmatter(
         item.data,
         ["name", "description", "arguments"],
-        item.filePath
+        item.filePath,
       );
 
       const templateContent = item.content;
@@ -90,9 +99,8 @@ export async function loadPrompts(): Promise<PromptTemplate[]> {
         name: item.data.name,
         description: item.data.description,
         arguments: item.data.arguments,
-        template: (args: Record<string, string>) => {
-          return processTemplate(templateContent, args);
-        },
+        template: (args: Record<string, string>) =>
+          processTemplate(templateContent, args),
       });
     } catch (error) {
       console.warn(`Skipping invalid prompt file: ${item.filePath}`, error);
@@ -109,14 +117,6 @@ export async function loadPrompts(): Promise<PromptTemplate[]> {
  */
 export async function getAllPrompts(): Promise<PromptTemplate[]> {
   return await loadPrompts();
-}
-
-/**
- * Get prompt by name
- */
-export async function getPromptByName(name: string): Promise<PromptTemplate | undefined> {
-  const prompts = await loadPrompts();
-  return prompts.find(p => p.name === name);
 }
 
 /**
