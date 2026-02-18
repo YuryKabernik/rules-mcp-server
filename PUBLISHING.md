@@ -85,10 +85,10 @@ npm publish
 
 1. Create a [GitHub Personal Access Token](https://github.com/settings/tokens/new) with `read:packages` scope
 
-2. Create or edit `~/.npmrc`:
+2. Create or edit `~/.npmrc` (replace `<YOUR_GITHUB_TOKEN>` with your actual token):
    ```
    @yurykabernik:registry=https://npm.pkg.github.com
-   //npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
+   //npm.pkg.github.com/:_authToken=<YOUR_GITHUB_TOKEN>
    ```
 
 **Install:**

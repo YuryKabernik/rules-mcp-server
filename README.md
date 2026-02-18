@@ -84,10 +84,10 @@ This package is published to GitHub Packages. To install it, you need to configu
 **Setup authentication (one-time):**
 
 1. Create a [GitHub Personal Access Token](https://github.com/settings/tokens/new) with `read:packages` scope
-2. Add to your `~/.npmrc`:
+2. Add to your `~/.npmrc` (replace `<YOUR_GITHUB_TOKEN>` with your actual token):
 ```bash
 @yurykabernik:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
+//npm.pkg.github.com/:_authToken=<YOUR_GITHUB_TOKEN>
 ```
 
 **Global installation:**
