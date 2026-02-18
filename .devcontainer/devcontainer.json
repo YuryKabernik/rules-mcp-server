@@ -1,0 +1,52 @@
+{
+  "name": "Rules MCP Server",
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "typescript.tsdk": "node_modules/typescript/lib",
+        "typescript.enablePromptUseWorkspaceTsdk": true,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+          "source.fixAll": "explicit"
+        },
+        "files.eol": "\n"
+      },
+      
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-next",
+        "vitest.explorer",
+        "yzhang.markdown-all-in-one",
+        "streetsidesoftware.code-spell-checker",
+        "eamodio.gitlens",
+        "GitHub.copilot",
+        "GitHub.copilot-chat"
+      ]
+    }
+  },
+
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    }
+  },
+
+  "postCreateCommand": "npm install",
+  "postStartCommand": "npm run build",
+  "postAttachCommand": {
+    "server": "echo 'Development environment ready! Run: npm start'"
+  },
+
+  "remoteUser": "node",
+
+  "containerEnv": {
+    "NODE_ENV": "development"
+  }
+}

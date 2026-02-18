@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "rules-mcp-server": {
+      "command": "node",
+      "args": [
+        "/absolute/path/to/rules-mcp-server/build/index.js"
+      ]
+    }
+  }
+}

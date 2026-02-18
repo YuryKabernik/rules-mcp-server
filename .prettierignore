@@ -1,0 +1,18 @@
+# Build outputs
+build/
+dist/
+*.js.map
+*.d.ts
+
+# Dependencies
+node_modules/
+
+# Config files that should maintain their format
+package-lock.json
+
+# Documentation that should maintain their format
+*.md
+
+# Hidden files
+.git/
+.vscode/

@@ -1,0 +1,10 @@
+{
+  "servers": {
+    "rules-mcp-server": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["/workspaces/rules-mcp-server/build/index.js"]
+    }
+  },
+  "inputs": []
+}
