@@ -31,57 +31,57 @@ export type CodeType = 'source' | 'test';
  * Rule definition
  */
 export interface Rule {
-  id: string;
-  title: string;
-  description: string;
-  category: RuleCategory;
-  system: ProjectSystem;
-  language?: Language;
-  codeType?: CodeType;
-  content: string;
-  examples?: string[];
-  tags?: string[];
+	id: string;
+	title: string;
+	description: string;
+	category: RuleCategory;
+	system: ProjectSystem;
+	language?: Language;
+	codeType?: CodeType;
+	content: string;
+	examples?: string[];
+	tags?: string[];
 }
 
 /**
  * Rule collection for a specific context
  */
 export interface RuleCollection {
-  system: ProjectSystem;
-  language?: Language;
-  rules: Rule[];
+	system: ProjectSystem;
+	language?: Language;
+	rules: Rule[];
 }
 
 /**
  * Resource definition
  */
 export interface Resource {
-  uri: string;
-  name: string;
-  description: string;
-  mimeType: string;
-  content: string;
+	uri: string;
+	name: string;
+	description: string;
+	mimeType: string;
+	content: string;
 }
 
 /**
  * Prompt template definition
  */
 export interface PromptTemplate {
-  name: string;
-  description: string;
-  arguments: Array<{
-    name: string;
-    description: string;
-    required: boolean;
-  }>;
-  template: (args: Record<string, string>) => string;
+	name: string;
+	description: string;
+	arguments: Array<{
+		name: string;
+		description: string;
+		required: boolean;
+	}>;
+	template: (args: Record<string, string>) => string;
 }
 
 /**
  * Tool input schema for getting rules
  */
 export interface GetRulesInput {
-  category?: RuleCategoryFilter;
-  language?: Language;
-  codeType?: CodeType;
+	category?: RuleCategoryFilter;
+	language?: Language;
+	codeType?: CodeType;
 }

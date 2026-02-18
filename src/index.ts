@@ -34,10 +34,10 @@ import { startServer } from './server.js';
  * in the startServer() function.
  */
 async function main() {
-  await startServer();
+	await startServer();
 }
 
 main().catch((error) => {
-  console.error('Fatal error in main():', error);
-  process.exit(1);
+	console.error('Fatal error in main():', error);
+	process.exit(1);
 });
