@@ -1,10 +1,14 @@
 {
   "servers": {
-    "rules-mcp-server": {
+    "rules-mcp-server-local": {
       "type": "stdio",
       "command": "node",
       "args": ["/workspaces/rules-mcp-server/build/index.js"]
-    }
+    },
+    "rules-mcp-server-package": {
+			"command": "npx",
+			"args": ["@yurykabernik/rules-mcp-server"]
+		},
   },
   "inputs": []
 }
