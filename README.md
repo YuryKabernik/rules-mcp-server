@@ -1,5 +1,7 @@
 # rules-mcp-server
 
+![CI](https://github.com/YuryKabernik/rules-mcp-server/workflows/CI/badge.svg)
+
 MCP (Model Context Protocol) server providing development prompts with embedded rules for microfrontend and microservice applications.
 
 ## Overview
@@ -376,6 +378,19 @@ Uses stdio transport for communication with MCP clients. The server follows the 
 3. **Connect**: Wire the server to the transport
 
 For detailed architecture documentation, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+### Continuous Integration
+
+This project uses GitHub Actions for automated testing and quality checks:
+
+- **CI Workflow**: Runs on every push to every branch and all pull requests
+  - Code formatting check (Prettier)
+  - Linting (ESLint)
+  - Build verification (TypeScript compilation)
+  - Unit tests (Vitest)
+  - Build artifact upload
+
+See [CI_WORKFLOW.md](CI_WORKFLOW.md) for detailed documentation.
 
 ## Contributing
 
