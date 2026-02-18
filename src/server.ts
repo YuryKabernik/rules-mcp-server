@@ -28,22 +28,22 @@ import { registerPromptsHandlers } from './handlers/prompts.js';
  * @returns Configured MCP Server instance
  */
 export async function createServer(): Promise<McpServer> {
-  const server = new McpServer(
-    {
-      name: 'rules-mcp-server',
-      version: '1.0.0',
-    },
-    {
-      capabilities: {
-        prompts: {},
-      },
-    }
-  );
+	const server = new McpServer(
+		{
+			name: 'rules-mcp-server',
+			version: '1.0.0',
+		},
+		{
+			capabilities: {
+				prompts: {},
+			},
+		}
+	);
 
-  // Register prompts handlers
-  await registerPromptsHandlers(server);
+	// Register prompts handlers
+	await registerPromptsHandlers(server);
 
-  return server;
+	return server;
 }
 
 /**
@@ -69,15 +69,15 @@ export async function createServer(): Promise<McpServer> {
  * ```
  */
 export async function startServer(): Promise<void> {
-  // STEP 1: Create the MCP server with registered handlers
-  const server = await createServer();
+	// STEP 1: Create the MCP server with registered handlers
+	const server = await createServer();
 
-  // STEP 2: Create the transport
-  // Using stdio transport for local, process-spawned integrations
-  const transport = new StdioServerTransport();
+	// STEP 2: Create the transport
+	// Using stdio transport for local, process-spawned integrations
+	const transport = new StdioServerTransport();
 
-  // STEP 3: Connect the server to the transport
-  await server.connect(transport);
+	// STEP 3: Connect the server to the transport
+	await server.connect(transport);
 
-  console.error('Rules MCP Server running on stdio');
+	console.error('Rules MCP Server running on stdio');
 }
