@@ -1,5 +1,5 @@
 {
-	"name": "rules-mcp-server",
+	"name": "@yurykabernik/rules-mcp-server",
 	"version": "1.0.0",
 	"description": "MCP server providing interactive prompts with embedded development rules for microfrontend and microservice applications. Offers architectural guidance and best practices through contextual prompts.",
 	"main": "build/index.js",
@@ -50,6 +50,9 @@
 		"url": "https://github.com/YuryKabernik/rules-mcp-server/issues"
 	},
 	"homepage": "https://github.com/YuryKabernik/rules-mcp-server#readme",
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com"
+	},
 	"dependencies": {
 		"@modelcontextprotocol/sdk": "^1.26.0",
 		"gray-matter": "^4.0.3"

@@ -1,5 +1,7 @@
 # rules-mcp-server
 
+![CI](https://github.com/YuryKabernik/rules-mcp-server/workflows/CI/badge.svg)
+
 MCP (Model Context Protocol) server providing development prompts with embedded rules for microfrontend and microservice applications.
 
 ## Overview
@@ -77,7 +79,33 @@ Rules are embedded in prompt responses and provided contextually based on your d
 - Node.js v24.x or later (latest version recommended)
 - npm v11.x or later
 
-### As NPM Package
+### From GitHub Packages
+
+This package is published to GitHub Packages. To install it, you need to configure npm to use GitHub Packages for the `@yurykabernik` scope.
+
+**Setup authentication (one-time):**
+
+1. Create a [GitHub Personal Access Token](https://github.com/settings/tokens/new) with `read:packages` scope
+2. Add to your `~/.npmrc` (replace `<YOUR_GITHUB_TOKEN>` with your actual token):
+```bash
+@yurykabernik:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=<YOUR_GITHUB_TOKEN>
+```
+
+**Global installation:**
+```bash
+npm install -g @yurykabernik/rules-mcp-server
+rules-mcp-server
+```
+
+**Use with npx (no installation):**
+```bash
+npx @yurykabernik/rules-mcp-server
+```
+
+### As NPM Package (Public Registry)
+
+If published to npm public registry:
 
 **Global installation:**
 ```bash
@@ -150,7 +178,7 @@ Add to your Claude Desktop configuration file:
   "mcpServers": {
     "rules-mcp-server": {
       "command": "npx",
-      "args": ["-y", "rules-mcp-server"]
+      "args": ["@yurykabernik/rules-mcp-server"]
     }
   }
 }
@@ -350,6 +378,17 @@ Uses stdio transport for communication with MCP clients. The server follows the 
 3. **Connect**: Wire the server to the transport
 
 For detailed architecture documentation, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+### Continuous Integration
+
+This project uses GitHub Actions for automated testing and quality checks:
+
+- **CI Workflow**: Runs on every push to every branch and all pull requests
+  - Build verification (TypeScript compilation)
+  - Unit tests (Vitest)
+  - Build artifact upload
+
+See [CI_WORKFLOW.md](CI_WORKFLOW.md) for detailed documentation.
 
 ## Contributing
 

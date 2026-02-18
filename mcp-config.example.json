@@ -1,6 +1,16 @@
 {
 	"mcpServers": {
 		"rules-mcp-server": {
+			"comment": "Using npx with GitHub Packages (recommended)",
+			"command": "npx",
+			"args": ["@yurykabernik/rules-mcp-server"]
+		},
+		"rules-mcp-server-global": {
+			"comment": "If installed globally",
+			"command": "rules-mcp-server"
+		},
+		"rules-mcp-server-source": {
+			"comment": "Running from source",
 			"command": "node",
 			"args": ["/absolute/path/to/rules-mcp-server/build/index.js"]
 		}
