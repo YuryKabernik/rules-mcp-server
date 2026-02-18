@@ -24,45 +24,47 @@ import * as z from 'zod/v4';
  * @param server - The MCP Server instance to register handlers on
  */
 export async function registerPromptsHandlers(server: McpServer): Promise<void> {
-  // List available prompts - loaded from markdown files
-  const prompts = await getAllPrompts();
+	// List available prompts - loaded from markdown files
+	const prompts = await getAllPrompts();
 
-  prompts.forEach((prompt) => {
-    server.registerPrompt(
-      prompt.name,
-      {
-        title: prompt.name,
-        description: prompt.description,
-        argsSchema: {
-          ...Object.fromEntries(
-            (prompt.arguments || []).map((arg) => [
-              arg.name,
-              (arg.required ? z.string() : z.string().optional()).describe(arg.description),
-            ])
-          ),
-        },
-      },
-      async (args): Promise<GetPromptResult> => {
-        const filteredArgs: Record<string, string> = {};
-        for (const [key, value] of Object.entries(args || {})) {
-          if (value !== undefined) {
-            filteredArgs[key] = value;
-          }
-        }
-        const text = prompt.template(filteredArgs);
+	prompts.forEach((prompt) => {
+		server.registerPrompt(
+			prompt.name,
+			{
+				title: prompt.name,
+				description: prompt.description,
+				argsSchema: {
+					...Object.fromEntries(
+						(prompt.arguments || []).map((arg) => [
+							arg.name,
+							(arg.required ? z.string() : z.string().optional()).describe(
+								arg.description
+							),
+						])
+					),
+				},
+			},
+			async (args): Promise<GetPromptResult> => {
+				const filteredArgs: Record<string, string> = {};
+				for (const [key, value] of Object.entries(args || {})) {
+					if (value !== undefined) {
+						filteredArgs[key] = value;
+					}
+				}
+				const text = prompt.template(filteredArgs);
 
-        return {
-          messages: [
-            {
-              role: 'user',
-              content: {
-                type: 'text',
-                text,
-              },
-            },
-          ],
-        };
-      }
-    );
-  });
+				return {
+					messages: [
+						{
+							role: 'user',
+							content: {
+								type: 'text',
+								text,
+							},
+						},
+					],
+				};
+			}
+		);
+	});
 }

@@ -17,13 +17,13 @@ const PROMPTS_DIR = path.join(__dirname, '../../content/prompts');
  * Prompt frontmatter metadata
  */
 export interface PromptMetadata {
-  name: string;
-  description: string;
-  arguments: Array<{
-    name: string;
-    description: string;
-    required: boolean;
-  }>;
+	name: string;
+	description: string;
+	arguments: Array<{
+		name: string;
+		description: string;
+		required: boolean;
+	}>;
 }
 
 // Cache for loaded prompts
@@ -38,24 +38,27 @@ let promptsCache: PromptTemplate[] | null = null;
  * @returns Processed template
  */
 function processTemplate(template: string, args: Record<string, string>): string {
-  let result = template;
+	let result = template;
 
-  // Replace {{variable|default}} patterns
-  result = result.replace(/\{\{(\w+)\|([^}]+)\}\}/g, (match, varName, defaultValue) => {
-    return args[varName] || defaultValue;
-  });
+	// Replace {{variable|default}} patterns
+	result = result.replace(/\{\{(\w+)\|([^}]+)\}\}/g, (match, varName, defaultValue) => {
+		return args[varName] || defaultValue;
+	});
 
-  // Replace {{variable}} patterns
-  result = result.replace(/\{\{(\w+)\}\}/g, (match, varName) => {
-    return args[varName] || match;
-  });
+	// Replace {{variable}} patterns
+	result = result.replace(/\{\{(\w+)\}\}/g, (match, varName) => {
+		return args[varName] || match;
+	});
 
-  // Handle {{#if condition}} blocks (simple implementation)
-  result = result.replace(/\{\{#if (\w+)\}\}([\s\S]*?)\{\{\/if\}\}/g, (match, varName, content) => {
-    return args[varName] ? content : '';
-  });
+	// Handle {{#if condition}} blocks (simple implementation)
+	result = result.replace(
+		/\{\{#if (\w+)\}\}([\s\S]*?)\{\{\/if\}\}/g,
+		(match, varName, content) => {
+			return args[varName] ? content : '';
+		}
+	);
 
-  return result;
+	return result;
 }
 
 /**
@@ -64,47 +67,47 @@ function processTemplate(template: string, args: Record<string, string>): string
  * @returns Array of prompt templates
  */
 export async function loadPrompts(): Promise<PromptTemplate[]> {
-  // Return cached prompts if available
-  if (promptsCache) {
-    return promptsCache;
-  }
+	// Return cached prompts if available
+	if (promptsCache) {
+		return promptsCache;
+	}
 
-  const contentItems = await loadMarkdownDirectory<PromptMetadata>(PROMPTS_DIR);
-  const prompts: PromptTemplate[] = [];
+	const contentItems = await loadMarkdownDirectory<PromptMetadata>(PROMPTS_DIR);
+	const prompts: PromptTemplate[] = [];
 
-  for (const item of contentItems) {
-    try {
-      // Validate required fields
-      validateFrontmatter(item.data, ['name', 'description', 'arguments'], item.filePath);
+	for (const item of contentItems) {
+		try {
+			// Validate required fields
+			validateFrontmatter(item.data, ['name', 'description', 'arguments'], item.filePath);
 
-      const templateContent = item.content;
+			const templateContent = item.content;
 
-      prompts.push({
-        name: item.data.name,
-        description: item.data.description,
-        arguments: item.data.arguments,
-        template: (args: Record<string, string>) => processTemplate(templateContent, args),
-      });
-    } catch (error) {
-      console.warn(`Skipping invalid prompt file: ${item.filePath}`, error);
-    }
-  }
+			prompts.push({
+				name: item.data.name,
+				description: item.data.description,
+				arguments: item.data.arguments,
+				template: (args: Record<string, string>) => processTemplate(templateContent, args),
+			});
+		} catch (error) {
+			console.warn(`Skipping invalid prompt file: ${item.filePath}`, error);
+		}
+	}
 
-  // Cache the loaded prompts
-  promptsCache = prompts;
-  return prompts;
+	// Cache the loaded prompts
+	promptsCache = prompts;
+	return prompts;
 }
 
 /**
  * Get all prompts
  */
 export async function getAllPrompts(): Promise<PromptTemplate[]> {
-  return await loadPrompts();
+	return await loadPrompts();
 }
 
 /**
  * Clear the prompts cache (useful for testing)
  */
 export function clearPromptsCache(): void {
-  promptsCache = null;
+	promptsCache = null;
 }

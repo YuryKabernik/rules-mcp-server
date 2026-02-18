@@ -1,74 +1,74 @@
 {
-  "name": "@yurykabernik/rules-mcp-server",
-  "version": "1.0.0",
-  "description": "MCP server providing interactive prompts with embedded development rules for microfrontend and microservice applications. Offers architectural guidance and best practices through contextual prompts.",
-  "main": "build/index.js",
-  "type": "module",
-  "bin": {
-    "rules-mcp-server": "build/index.js"
-  },
-  "scripts": {
-    "build": "tsc",
-    "watch": "tsc --watch",
-    "start": "node build/index.js",
-    "dev": "tsx src/index.ts",
-    "prepare": "npm run build",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:ui": "vitest --ui",
-    "test:coverage": "vitest run --coverage",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "format:check": "prettier --check \"src/**/*.ts\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/YuryKabernik/rules-mcp-server.git"
-  },
-  "keywords": [
-    "mcp",
-    "model-context-protocol",
-    "prompts",
-    "microfrontend",
-    "microservice",
-    "rules",
-    "best-practices",
-    "architecture",
-    "development-guidance"
-  ],
-  "author": "",
-  "license": "ISC",
-  "files": [
-    "build/**/*",
-    "content/**/*.md",
-    "README.md",
-    "DEVELOPER_GUIDE.md",
-    "mcp-config.example.json"
-  ],
-  "bugs": {
-    "url": "https://github.com/YuryKabernik/rules-mcp-server/issues"
-  },
-  "homepage": "https://github.com/YuryKabernik/rules-mcp-server#readme",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.26.0",
-    "gray-matter": "^4.0.3"
-  },
-  "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "@types/eslint__js": "^8.42.3",
-    "@types/node": "^25.2.3",
-    "@vitest/ui": "^4.0.18",
-    "eslint": "^10.0.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.5",
-    "prettier": "^3.8.1",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.56.0",
-    "vitest": "^4.0.18"
-  }
+	"name": "@yurykabernik/rules-mcp-server",
+	"version": "1.0.0",
+	"description": "MCP server providing interactive prompts with embedded development rules for microfrontend and microservice applications. Offers architectural guidance and best practices through contextual prompts.",
+	"main": "build/index.js",
+	"type": "module",
+	"bin": {
+		"rules-mcp-server": "build/index.js"
+	},
+	"scripts": {
+		"build": "tsc",
+		"watch": "tsc --watch",
+		"start": "node build/index.js",
+		"dev": "tsx src/index.ts",
+		"prepare": "npm run build",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:ui": "vitest --ui",
+		"test:coverage": "vitest run --coverage",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"format": "prettier --write \"src/**/*.ts\"",
+		"format:check": "prettier --check \"src/**/*.ts\""
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/YuryKabernik/rules-mcp-server.git"
+	},
+	"keywords": [
+		"mcp",
+		"model-context-protocol",
+		"prompts",
+		"microfrontend",
+		"microservice",
+		"rules",
+		"best-practices",
+		"architecture",
+		"development-guidance"
+	],
+	"author": "",
+	"license": "ISC",
+	"files": [
+		"build/**/*",
+		"content/**/*.md",
+		"README.md",
+		"DEVELOPER_GUIDE.md",
+		"mcp-config.example.json"
+	],
+	"bugs": {
+		"url": "https://github.com/YuryKabernik/rules-mcp-server/issues"
+	},
+	"homepage": "https://github.com/YuryKabernik/rules-mcp-server#readme",
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com"
+	},
+	"dependencies": {
+		"@modelcontextprotocol/sdk": "^1.26.0",
+		"gray-matter": "^4.0.3"
+	},
+	"devDependencies": {
+		"@eslint/js": "^10.0.1",
+		"@types/eslint__js": "^8.42.3",
+		"@types/node": "^25.2.3",
+		"@vitest/ui": "^4.0.18",
+		"eslint": "^10.0.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-prettier": "^5.5.5",
+		"prettier": "^3.8.1",
+		"tsx": "^4.21.0",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.56.0",
+		"vitest": "^4.0.18"
+	}
 }

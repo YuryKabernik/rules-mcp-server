@@ -16,10 +16,10 @@ export { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
  * v2: These will come from @modelcontextprotocol/core
  */
 export type {
-  Tool,
-  Resource,
-  Prompt,
-  TextContent,
-  ImageContent,
-  EmbeddedResource,
+	Tool,
+	Resource,
+	Prompt,
+	TextContent,
+	ImageContent,
+	EmbeddedResource,
 } from '@modelcontextprotocol/sdk/types.js';
